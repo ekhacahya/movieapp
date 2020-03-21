@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import xyz.ecbn.moviemvvm.R
@@ -36,7 +35,6 @@ class HomeFragment : Fragment(), ItemSelectedListener {
         toolbar.title = getString(R.string.app_name)
 
         rvGenre.apply {
-            layoutManager = LinearLayoutManager(this@HomeFragment.context)
             adapter = mAdapter
         }
 

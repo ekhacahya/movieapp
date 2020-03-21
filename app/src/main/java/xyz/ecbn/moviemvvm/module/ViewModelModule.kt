@@ -7,7 +7,7 @@ import xyz.ecbn.moviemvvm.vm.MovieViewModel
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
  */
-val movieModule = module {
+val viewModelModule = module {
     viewModel {
         MovieViewModel(get())
     }

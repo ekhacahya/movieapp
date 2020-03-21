@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import xyz.ecbn.moviemvvm.R
@@ -37,7 +36,6 @@ class MoviesFragment : Fragment() {
         toolbar.title = genre?.name
 
         rvGenre.apply {
-            layoutManager = LinearLayoutManager(this@MoviesFragment.context)
             adapter = mAdapter
         }
 

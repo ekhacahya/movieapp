@@ -3,40 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="xyz.ecbn.moviemvvm.feature.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/movies"
-            app:destination="@id/moviesFragment"
-            app:enterAnim="@anim/fragment_fade_enter"
-            app:exitAnim="@anim/fragment_fade_exit" />
-    </fragment>
-    <fragment
-        android:id="@+id/moviesFragment"
-        android:name="xyz.ecbn.moviemvvm.feature.home.MoviesFragment"
-        android:label="MoviesFragment">
-        <argument
-            android:name="genre"
-            app:argType="xyz.ecbn.moviemvvm.data.model.GenreCollection$Genre"
-            app:nullable="true" />
-        <action
-            android:id="@+id/action_moviesFragment_to_movieFragment"
-            app:destination="@id/movieFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/movieFragment"
-        android:name="xyz.ecbn.moviemvvm.feature.detail.MovieFragment"
-        android:label="fragment_movie"
-        tools:layout="@layout/fragment_movie">
-        <argument
-            android:name="movie"
-            android:defaultValue="@null"
-            app:argType="xyz.ecbn.moviemvvm.data.model.MovieData"
-            app:nullable="true" />
-    </fragment>
+        android:id="@+id/mainFragment"
+        android:name="xyz.ecbn.moviemvvm.feature.main.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
 </navigation>

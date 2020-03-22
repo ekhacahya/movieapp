@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movie_navigation"
+    app:startDestination="@id/homeFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="xyz.ecbn.moviemvvm.feature.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/movies"
+            app:destination="@id/moviesFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/moviesFragment"
+        android:name="xyz.ecbn.moviemvvm.feature.home.MoviesFragment"
+        android:label="MoviesFragment">
+        <argument
+            android:name="genre"
+            app:argType="xyz.ecbn.moviemvvm.data.model.GenreCollection$Genre"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_moviesFragment_to_movieFragment"
+            app:destination="@id/movieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieFragment"
+        android:name="xyz.ecbn.moviemvvm.feature.detail.MovieFragment"
+        android:label="fragment_movie"
+        tools:layout="@layout/fragment_movie">
+        <argument
+            android:name="movie"
+            android:defaultValue="@null"
+            app:argType="xyz.ecbn.moviemvvm.data.model.MovieData"
+            app:nullable="true" />
+    </fragment>
+</navigation>

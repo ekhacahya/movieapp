@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_navigation"
+    app:startDestination="@id/menu_explore">
+    <fragment
+        android:id="@+id/menu_explore"
+        android:name="xyz.ecbn.moviemvvm.feature.discovery.DiscoveryFragment"
+        android:label="fragment_discovery"
+        tools:layout="@layout/fragment_discovery">
+        <action
+            android:id="@+id/action_discoveryFragment_to_trendingFragment"
+            app:destination="@id/menu_trending" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_trending"
+        android:name="xyz.ecbn.moviemvvm.feature.trending.TrendingFragment"
+        android:label="fragment_trending"
+        tools:layout="@layout/fragment_trending">
+        <action
+            android:id="@+id/action_menu_trending_to_upcomingFragment"
+            app:destination="@id/menu_upcoming" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_upcoming"
+        android:name="xyz.ecbn.moviemvvm.feature.upcoming.UpcomingFragment"
+        android:label="fragment_upcoming"
+        tools:layout="@layout/fragment_upcoming">
+        <action
+            android:id="@+id/action_upcomingFragment_to_profileFragment"
+            app:destination="@id/menu_profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_profile"
+        android:name="xyz.ecbn.moviemvvm.feature.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

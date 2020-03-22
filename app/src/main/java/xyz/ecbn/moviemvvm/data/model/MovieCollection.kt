@@ -1,5 +1,6 @@
 package xyz.ecbn.moviemvvm.data.model
 
+import alirezat775.lib.carouselview.CarouselModel
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -15,6 +16,10 @@ data class MovieCollection(
 data class MovieData(
     @SerializedName("id")
     val id: Int = 0,
+    @SerializedName("poster_path")
+    val posterPath: String = "",
+    @SerializedName("backdrop_path")
+    val backdropPath: String = "",
     @SerializedName("original_title")
     val originalTitle: String = "",
     @SerializedName("vote_average")
@@ -24,9 +29,11 @@ data class MovieData(
     @SerializedName("release_date")
     val releaseDate: String = "",
     var isFavorite: Boolean = false
-) : Parcelable {
+) : CarouselModel(), Parcelable {
     constructor(source: Parcel) : this(
         source.readInt(),
+        source.readString().toString(),
+        source.readString().toString(),
         source.readString().toString(),
         source.readString().toString(),
         source.readString().toString(),
@@ -38,6 +45,8 @@ data class MovieData(
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeInt(id)
+        writeString(posterPath)
+        writeString(backdropPath)
         writeString(originalTitle)
         writeString(voteAverage)
         writeString(overview)

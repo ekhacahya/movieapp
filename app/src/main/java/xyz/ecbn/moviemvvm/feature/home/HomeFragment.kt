@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import xyz.ecbn.moviemvvm.R
@@ -40,11 +39,11 @@ class HomeFragment : Fragment(), ItemSelectedListener {
 
         if (mAdapter.itemCount < 1) {
             movieViewModel.getGenres()
-            movieViewModel.genreState.observe(
+            /*movieViewModel.genreState.observe(
                 viewLifecycleOwner, Observer {
                     mAdapter.addAll(it.genres)
                 }
-            )
+            )*/
         }
     }
 

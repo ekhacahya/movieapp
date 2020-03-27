@@ -3,13 +3,20 @@ package xyz.ecbn.moviemvvm.data.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 data class GenreCollection(
     var genres: ArrayList<Genre> = arrayListOf()
 ) {
+    @Entity(tableName = "genre")
     data class Genre(
+        @PrimaryKey
+        @ColumnInfo(name = "id")
         var id: Int = 0,
-        var name: String = ""
+        @ColumnInfo(name = "name")
+        var name: String? = ""
     ) : Parcelable {
         constructor(source: Parcel) : this(
             source.readInt(),

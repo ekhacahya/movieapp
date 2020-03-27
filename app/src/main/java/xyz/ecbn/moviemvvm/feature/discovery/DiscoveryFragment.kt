@@ -10,20 +10,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.yarolegovich.discretescrollview.DSVOrientation
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
+import kotlinx.android.synthetic.main.discovery_content.*
 import kotlinx.android.synthetic.main.fragment_discovery.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import xyz.ecbn.moviemvvm.R
+import xyz.ecbn.moviemvvm.base.BaseFragment
 import xyz.ecbn.moviemvvm.vm.MovieViewModel
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class DiscoveryFragment : Fragment() {
+class DiscoveryFragment : BaseFragment() {
+    val TAG = DiscoveryFragment::class.java.simpleName
 
     private val movieViewModel: MovieViewModel by sharedViewModel()
     private val releaseNowAdapter: ReleaseNowAdapter by lazy {
-        return@lazy ReleaseNowAdapter()
+        val a = ReleaseNowAdapter()
+        a.setHasStableIds(true)
+        return@lazy a
     }
     private val discoveryCarouselAdapter: DiscoveryCarouselAdapter by lazy {
         return@lazy DiscoveryCarouselAdapter()
@@ -42,7 +47,22 @@ class DiscoveryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        swipeRefreshLayout.setOnRefreshListener {
+            movieViewModel.getGenres()
+            movieViewModel.getMovies()
+        }
+        initRecyclerView()
+        movieViewModel.getMovies()
+        movieViewModel.movies.observe(viewLifecycleOwner, Observer {
+            it?.let { it1 ->
+                discoveryCarouselAdapter.addAll(it1)
+                releaseNowAdapter.setData(it1)
+            }
+        })
+        movieViewModel.networkState.observe(viewLifecycleOwner, observer)
+    }
 
+    private fun initRecyclerView() {
         rvReleaseNow.apply {
             adapter = releaseNowAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -57,12 +77,17 @@ class DiscoveryFragment : Fragment() {
                     .build()
             )
         }
-        movieViewModel.getMovies()
-        movieViewModel.movieState.observe(viewLifecycleOwner, Observer {
-            it.movies?.let { it1 ->
-                discoveryCarouselAdapter.addAll(it1)
-                releaseNowAdapter.addAll(it1)
-            }
-        })
+    }
+
+    override fun showErrorMessage(msg: String) {
+        showSnackBar(parent, msg)
+    }
+
+    override fun showProgressBar() {
+        swipeRefreshLayout.isRefreshing = true
+    }
+
+    override fun hideProgressBar() {
+        swipeRefreshLayout.isRefreshing = false
     }
 }

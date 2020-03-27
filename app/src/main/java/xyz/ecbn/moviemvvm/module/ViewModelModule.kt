@@ -9,6 +9,6 @@ import xyz.ecbn.moviemvvm.vm.MovieViewModel
  */
 val viewModelModule = module {
     viewModel {
-        MovieViewModel(get())
+        MovieViewModel(get(), get())
     }
 }

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.squareup.picasso.Picasso
 import xyz.ecbn.moviemvvm.BuildConfig
 import xyz.ecbn.moviemvvm.R
@@ -19,6 +20,7 @@ class DiscoveryCarouselAdapter : RecyclerView.Adapter<DiscoveryCarouselAdapter.V
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivCarousel = itemView.findViewById<ImageView>(R.id.ivCarouosel)
+        val shimmer = itemView.findViewById<ShimmerFrameLayout>(R.id.shimmer)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,9 +36,11 @@ class DiscoveryCarouselAdapter : RecyclerView.Adapter<DiscoveryCarouselAdapter.V
         Picasso.get()
             .load(BuildConfig.BASE_URL_IMAGE.plus("w780") + movie.backdropPath)
             .into(holder.ivCarousel)
+        holder.shimmer.stopShimmer()
+        holder.shimmer.hideShimmer()
     }
 
-    fun addAll(movies: ArrayList<MovieData>) {
+    fun addAll(movies: List<MovieData>) {
         items.addAll(movies)
         notifyDataSetChanged()
     }

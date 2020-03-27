@@ -8,6 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import xyz.ecbn.moviemvvm.BuildConfig
 import xyz.ecbn.moviemvvm.BuildConfig.API_KEY
 import xyz.ecbn.moviemvvm.data.ServiceInterface
+import xyz.ecbn.moviemvvm.data.repo.MovieRepository
 import java.util.concurrent.TimeUnit
 
 /**
@@ -23,6 +24,9 @@ val retrofitModule = module {    // 1
     }
     single {
         get<Retrofit>().create(ServiceInterface::class.java)   // 5
+    }
+    single {
+        MovieRepository(get(), get())
     }
 }
 

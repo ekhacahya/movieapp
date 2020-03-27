@@ -3,6 +3,9 @@ package xyz.ecbn.moviemvvm.data.model
 import alirezat775.lib.carouselview.CarouselModel
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -13,21 +16,31 @@ data class MovieCollection(
     val results: ArrayList<MovieData>
 )
 
+@Entity(tableName = "movie_table")
 data class MovieData(
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     @SerializedName("id")
     val id: Int = 0,
+    @ColumnInfo(name = "posterPath")
     @SerializedName("poster_path")
-    val posterPath: String = "",
+    val posterPath: String? = "",
+    @ColumnInfo(name = "backdropPath")
     @SerializedName("backdrop_path")
-    val backdropPath: String = "",
+    val backdropPath: String? = "",
+    @ColumnInfo(name = "originalTitle")
     @SerializedName("original_title")
-    val originalTitle: String = "",
+    val originalTitle: String? = "",
+    @ColumnInfo(name = "voteAverage")
     @SerializedName("vote_average")
-    val voteAverage: String = "",
+    val voteAverage: String? = "",
+    @ColumnInfo(name = "overview")
     @SerializedName("overview")
-    val overview: String = "",
+    val overview: String? = "",
+    @ColumnInfo(name = "releaseDate")
     @SerializedName("release_date")
-    val releaseDate: String = "",
+    val releaseDate: String? = "",
+    @ColumnInfo(name = "isFavorite")
     var isFavorite: Boolean = false
 ) : CarouselModel(), Parcelable {
     constructor(source: Parcel) : this(

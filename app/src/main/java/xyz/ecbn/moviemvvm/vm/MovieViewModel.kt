@@ -1,68 +1,57 @@
 package xyz.ecbn.moviemvvm.vm
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import xyz.ecbn.moviemvvm.R
+import xyz.ecbn.moviemvvm.data.NetworkState
 import xyz.ecbn.moviemvvm.data.ServiceInterface
-import xyz.ecbn.moviemvvm.data.model.GenreCollection
-import xyz.ecbn.moviemvvm.data.model.MovieData
+import xyz.ecbn.moviemvvm.data.Status
+import xyz.ecbn.moviemvvm.data.repo.MovieRepository
 
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
  */
-class MovieViewModel(private val serviceInterface: ServiceInterface) : ViewModel() {
-    private val _uiState = MutableLiveData<MovieDataState>()
-    val movieState: LiveData<MovieDataState> get() = _uiState
+class MovieViewModel(
+    private val serviceInterface: ServiceInterface,
+    private val movieRepository: MovieRepository
+) : ViewModel() {
 
-    private val _genreState = MutableLiveData<GenreDataState>()
-    val genreState: LiveData<GenreDataState> get() = _genreState
+    private val TAG = MovieViewModel::class.java.simpleName
+    val _networkState = MutableLiveData<NetworkState>()
+    val networkState: LiveData<NetworkState>
+        get() = _networkState
+
+    val movies = movieRepository.movies
 
     fun getGenres() {
-        viewModelScope.launch {   // 4
-            runCatching {  //  5
-                serviceInterface.genreMovies()  // 6
+        viewModelScope.launch {
+            runCatching {
+                _networkState.postValue(NetworkState.LOADING)
+                serviceInterface.genreMovies()
             }.onSuccess {
-                _genreState.value = GenreDataState(it.genres)
+                _networkState.postValue(NetworkState.LOADED)
             }.onFailure {
-                Log.d(TAG, "onFailure: ${it.message}")
+                _networkState.postValue(NetworkState(Status.FAILED, it.message.toString()))
             }
         }
     }
 
-    fun getMovies(genre: String = "") {
-        viewModelScope.launch {   // 4
-            runCatching {  //  5
-                emitUiState(showProgress = true)
-                serviceInterface.popularMovies(withGenre = genre)  // 6
+    fun getMovies(page: Int = 1, genre: String = "") {
+        viewModelScope.launch {
+            runCatching {
+                Log.d(TAG, "getMovies runCatching:")
+                _networkState.postValue(NetworkState.LOADING)
+                movieRepository.getMovies(page, genre)
             }.onSuccess {
-                emitUiState(movies = it.results)    // 7
+                Log.d(TAG, "getMovies onSuccess:")
+                _networkState.postValue(NetworkState.LOADED)
             }.onFailure {
-                emitUiState(error = R.string.internet_failure_error)   //  8
+                _networkState.postValue(NetworkState(Status.FAILED, it.message.toString()))
+                Log.d(TAG, "getMovies onFailure: ${it.message}")
             }
         }
-    }
-
-    private fun emitUiState(
-        showProgress: Boolean = false,
-        movies: ArrayList<MovieData>? = null,
-        error: Int? = null
-    ) {
-        val dataState = MovieDataState(showProgress, movies, error)
-        _uiState.value = dataState
     }
 }
-
-data class MovieDataState(   // 9
-    val showProgress: Boolean,
-    val movies: ArrayList<MovieData>?,
-    val error: Int?
-)
-
-data class GenreDataState(
-    val genres: ArrayList<GenreCollection.Genre>
-)

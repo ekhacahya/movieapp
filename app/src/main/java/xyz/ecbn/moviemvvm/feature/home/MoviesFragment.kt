@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import xyz.ecbn.moviemvvm.R
@@ -40,10 +39,10 @@ class MoviesFragment : Fragment() {
         }
 
         movieViewModel.getMovies(genre = genre?.id.toString())
-        movieViewModel.movieState.observe(
+        /*movieViewModel.movieState.observe(
             viewLifecycleOwner, Observer {
                 it.movies?.let { it1 -> mAdapter.addAll(it1) }
             }
-        )
+        )*/
     }
 }

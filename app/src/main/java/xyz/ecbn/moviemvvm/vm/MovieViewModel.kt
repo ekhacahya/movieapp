@@ -20,17 +20,23 @@ class MovieViewModel(
 ) : ViewModel() {
 
     private val TAG = MovieViewModel::class.java.simpleName
-    val _networkState = MutableLiveData<NetworkState>()
-    val networkState: LiveData<NetworkState>
+    private val _networkState = MutableLiveData<NetworkState>()
+    val network: LiveData<NetworkState>
         get() = _networkState
 
+    init {
+        getGenres()
+        getMovies()
+    }
+
     val movies = movieRepository.movies
+    val genres = movieRepository.genres
 
     fun getGenres() {
         viewModelScope.launch {
             runCatching {
                 _networkState.postValue(NetworkState.LOADING)
-                serviceInterface.genreMovies()
+                movieRepository.getGenres()
             }.onSuccess {
                 _networkState.postValue(NetworkState.LOADED)
             }.onFailure {

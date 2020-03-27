@@ -24,13 +24,10 @@ class MovieRepository(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 
-    val movies: LiveData<List<MovieData>> = Transformations.map(database.movieDao().getMovies()) {
-        it
-    }
+    val movies: LiveData<List<MovieData>> =
+        Transformations.map(database.movieDao().getMovies()) { it }
     val genres: LiveData<List<GenreCollection.Genre>> =
-        Transformations.map(database.movieDao().getGenres()) {
-            it
-        }
+        Transformations.map(database.movieDao().getGenres()) { it }
 
     suspend fun getGenres(): List<GenreCollection.Genre>? {
         return withContext(Dispatchers.IO) {

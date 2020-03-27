@@ -10,7 +10,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import xyz.ecbn.moviemvvm.module.appModule
-import xyz.ecbn.moviemvvm.module.picassoModule
+import xyz.ecbn.moviemvvm.module.glideModule
 import xyz.ecbn.moviemvvm.module.retrofitModule
 import xyz.ecbn.moviemvvm.module.viewModelModule
 
@@ -25,7 +25,7 @@ class MovieApp : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@MovieApp)
-            modules(listOf(retrofitModule, picassoModule, viewModelModule, appModule))
+            modules(listOf(retrofitModule, viewModelModule, appModule, glideModule))
         }
 
         ViewPump.init(

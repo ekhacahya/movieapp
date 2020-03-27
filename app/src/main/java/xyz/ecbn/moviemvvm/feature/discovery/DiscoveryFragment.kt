@@ -7,31 +7,38 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.RequestManager
 import com.yarolegovich.discretescrollview.DSVOrientation
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import kotlinx.android.synthetic.main.discovery_content.*
 import kotlinx.android.synthetic.main.fragment_discovery.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import xyz.ecbn.moviemvvm.R
 import xyz.ecbn.moviemvvm.base.BaseFragment
+import xyz.ecbn.moviemvvm.data.model.GenreCollection
+import xyz.ecbn.moviemvvm.data.model.MovieData
 import xyz.ecbn.moviemvvm.vm.MovieViewModel
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class DiscoveryFragment : BaseFragment() {
+class DiscoveryFragment : BaseFragment(), Observer<List<Any>> {
     val TAG = DiscoveryFragment::class.java.simpleName
+
+    private val glide: RequestManager by inject()
 
     private val movieViewModel: MovieViewModel by sharedViewModel()
     private val releaseNowAdapter: ReleaseNowAdapter by lazy {
-        val a = ReleaseNowAdapter()
-        a.setHasStableIds(true)
-        return@lazy a
+        return@lazy ReleaseNowAdapter(glide)
+    }
+    private val genreAdapter: GenreAdapter by lazy {
+        return@lazy GenreAdapter()
     }
     private val discoveryCarouselAdapter: DiscoveryCarouselAdapter by lazy {
-        return@lazy DiscoveryCarouselAdapter()
+        return@lazy DiscoveryCarouselAdapter(glide)
     }
     private val mAdapterDiscovery: InfiniteScrollAdapter<DiscoveryCarouselAdapter.ViewHolder> by lazy {
         return@lazy InfiniteScrollAdapter.wrap(discoveryCarouselAdapter)
@@ -52,19 +59,18 @@ class DiscoveryFragment : BaseFragment() {
             movieViewModel.getMovies()
         }
         initRecyclerView()
-        movieViewModel.getMovies()
-        movieViewModel.movies.observe(viewLifecycleOwner, Observer {
-            it?.let { it1 ->
-                discoveryCarouselAdapter.addAll(it1)
-                releaseNowAdapter.setData(it1)
-            }
-        })
-        movieViewModel.networkState.observe(viewLifecycleOwner, observer)
+        movieViewModel.movies.observe(viewLifecycleOwner, this)
+        movieViewModel.genres.observe(viewLifecycleOwner, this)
+        movieViewModel.network.observe(viewLifecycleOwner, observer)
     }
 
     private fun initRecyclerView() {
         rvReleaseNow.apply {
             adapter = releaseNowAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
+        rvGenre.apply {
+            adapter = genreAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
         rvCarousel.apply {
@@ -89,5 +95,28 @@ class DiscoveryFragment : BaseFragment() {
 
     override fun hideProgressBar() {
         swipeRefreshLayout.isRefreshing = false
+    }
+
+    /**
+     * Called when the data is changed.
+     * @param t  The new data
+     */
+    override fun onChanged(t: List<Any>) {
+        t.filterIsInstance<MovieData>().takeIf {
+            it.size == t.size
+        }.let {
+            it?.let { it1 ->
+                discoveryCarouselAdapter.setData(it1.subList(0, 3))
+                releaseNowAdapter.setData(it1)
+            }
+        }
+        t.filterIsInstance<GenreCollection.Genre>().takeIf {
+            it.size == t.size
+        }.let {
+            it?.let { it1 ->
+                genreAdapter.setData(it1.subList(0, 3))
+            }
+        }
+
     }
 }

@@ -22,9 +22,9 @@ class ReleaseNowAdapter(private val glide: RequestManager) :
     private val items = mutableListOf<Movie>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val ivCarousel = itemView.findViewById<ImageView>(R.id.ivMovie)
-        val tvTitle = itemView.findViewById<TextView>(R.id.tvTitle)
-        val shimmer = itemView.findViewById<ShimmerFrameLayout>(R.id.shimmer)
+        val ivCarousel: ImageView = itemView.findViewById<ImageView>(R.id.ivMovie)
+        val tvTitle: TextView = itemView.findViewById<TextView>(R.id.tvTitle)
+        val shimmer: ShimmerFrameLayout = itemView.findViewById<ShimmerFrameLayout>(R.id.shimmer)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

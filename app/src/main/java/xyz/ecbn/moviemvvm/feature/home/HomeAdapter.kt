@@ -16,7 +16,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     private val items = mutableListOf<Movie>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvTitle = itemView.findViewById<TextView>(R.id.textView)
+        val tvTitle: TextView = itemView.findViewById<TextView>(R.id.textView)
 
     }
 

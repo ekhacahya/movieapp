@@ -21,8 +21,8 @@ class GenreAdapter(selectedListener: ItemSelectedListener) :
     private val listener = selectedListener
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvTitle = itemView.findViewById<TextView>(R.id.textView)
-        val cardView = itemView.findViewById<CardView>(R.id.cardParent)
+        val tvTitle: TextView = itemView.findViewById<TextView>(R.id.textView)
+        val cardView: CardView = itemView.findViewById<CardView>(R.id.cardParent)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,6 +36,7 @@ class GenreAdapter(selectedListener: ItemSelectedListener) :
         val genre = items[holder.adapterPosition]
         holder.tvTitle.text = genre.name
         holder.cardView.setOnClickListener {
+            listener.onItemClicked(it)
             val movies = HomeFragmentDirections.movies(genre)
             it.findNavController().navigate(movies)
         }

@@ -18,7 +18,7 @@ val appModule = module {
             .setFontAttrId(R.attr.fontPath)
             .build()
     }
-    single { DarkModeHelper(androidContext()) }
+    single { DarkModeHelper() }
     single {
         LocalDB.getDatabase(androidContext())
     }

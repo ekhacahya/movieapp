@@ -17,8 +17,8 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import xyz.ecbn.moviemvvm.R
 import xyz.ecbn.moviemvvm.base.BaseFragment
-import xyz.ecbn.moviemvvm.data.model.GenreCollection
-import xyz.ecbn.moviemvvm.data.model.MovieData
+import xyz.ecbn.moviemvvm.data.model.Genre
+import xyz.ecbn.moviemvvm.data.model.Movie
 import xyz.ecbn.moviemvvm.vm.MovieViewModel
 
 
@@ -102,19 +102,19 @@ class DiscoveryFragment : BaseFragment(), Observer<List<Any>> {
      * @param t  The new data
      */
     override fun onChanged(t: List<Any>) {
-        t.filterIsInstance<MovieData>().takeIf {
+        t.filterIsInstance<Movie>().takeIf {
             it.size == t.size
         }.let {
             it?.let { it1 ->
-                discoveryCarouselAdapter.setData(it1.subList(0, 3))
+                discoveryCarouselAdapter.setData(it1)
                 releaseNowAdapter.setData(it1)
             }
         }
-        t.filterIsInstance<GenreCollection.Genre>().takeIf {
+        t.filterIsInstance<Genre>().takeIf {
             it.size == t.size
         }.let {
             it?.let { it1 ->
-                genreAdapter.setData(it1.subList(0, 3))
+                genreAdapter.setData(it1)
             }
         }
 

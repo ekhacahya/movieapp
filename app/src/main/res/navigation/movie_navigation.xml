@@ -23,7 +23,7 @@
         android:label="MoviesFragment">
         <argument
             android:name="genre"
-            app:argType="xyz.ecbn.moviemvvm.data.model.GenreCollection$Genre"
+            app:argType="xyz.ecbn.moviemvvm.data.model.Genre"
             app:nullable="true" />
         <action
             android:id="@+id/action_moviesFragment_to_movieFragment"
@@ -37,7 +37,7 @@
         <argument
             android:name="movie"
             android:defaultValue="@null"
-            app:argType="xyz.ecbn.moviemvvm.data.model.MovieData"
+            app:argType="xyz.ecbn.moviemvvm.data.model.Movie"
             app:nullable="true" />
     </fragment>
 </navigation>

@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.facebook.shimmer.ShimmerFrameLayout
 import xyz.ecbn.moviemvvm.BuildConfig
 import xyz.ecbn.moviemvvm.R
-import xyz.ecbn.moviemvvm.data.model.MovieData
+import xyz.ecbn.moviemvvm.data.model.Movie
 
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
@@ -18,7 +19,7 @@ import xyz.ecbn.moviemvvm.data.model.MovieData
 class ReleaseNowAdapter(private val glide: RequestManager) :
     RecyclerView.Adapter<ReleaseNowAdapter.ViewHolder>() {
 
-    private val items = mutableListOf<MovieData>()
+    private val items = mutableListOf<Movie>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivCarousel = itemView.findViewById<ImageView>(R.id.ivMovie)
@@ -35,7 +36,7 @@ class ReleaseNowAdapter(private val glide: RequestManager) :
     override fun getItemCount(): Int = items.size
 
     override fun getItemId(position: Int): Long {
-        return items[position].id.toLong()
+        return items[position].id!!.toLong()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -45,19 +46,24 @@ class ReleaseNowAdapter(private val glide: RequestManager) :
         holder.tvTitle.text = movie.originalTitle
         holder.shimmer.stopShimmer()
         holder.shimmer.hideShimmer()
+        holder.shimmer.setOnClickListener {
+            val mv =
+                DiscoveryFragmentDirections.actionDiscoveryFragmentToMovieFragment2(movie)
+            it.findNavController().navigate(mv)
+        }
     }
 
-    fun setData(movies: List<MovieData>) {
+    fun setData(movies: List<Movie>) {
         items.clear()
         addAll(movies)
     }
 
-    fun addAll(movies: List<MovieData>) {
+    fun addAll(movies: List<Movie>) {
         items.addAll(movies)
         notifyDataSetChanged()
     }
 
-    fun add(movie: MovieData) {
+    fun add(movie: Movie) {
         items.add(movie)
         notifyDataSetChanged()
     }

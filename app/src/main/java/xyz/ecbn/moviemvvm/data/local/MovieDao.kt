@@ -5,31 +5,36 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import xyz.ecbn.moviemvvm.data.model.GenreCollection
-import xyz.ecbn.moviemvvm.data.model.MovieData
+import xyz.ecbn.moviemvvm.data.model.Genre
+import xyz.ecbn.moviemvvm.data.model.Movie
 
 /**
  * MovieAppMVVM Created by ecbn on 23/03/20.
  */
 @Dao
 interface MovieDao {
+    /*MovieList*/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun setMovie(movie: MovieData)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun setMovies(movie: ArrayList<MovieData>)
-
-    @Query("SELECT * from movie_table ORDER BY id ASC")
-    fun getMovies(): LiveData<List<MovieData>>
+    fun setMovie(movie: Movie)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun setGenre(movie: GenreCollection.Genre)
+    fun setMovies(movie: ArrayList<Movie>)
+
+    @Query("SELECT * from movie ORDER BY id ASC")
+    fun getMovies(): LiveData<List<Movie>>
+
+    @Query("SELECT * from movie WHERE id = :id")
+    fun getMovie(id: Int): LiveData<Movie>
+
+    /*Genre Movie*/
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun setGenre(movie: Genre)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun setGenres(movie: ArrayList<GenreCollection.Genre>)
+    fun setGenres(movie: ArrayList<Genre>)
 
-    @Query("SELECT * from movie_table ORDER BY id ASC")
-    fun getGenres(): LiveData<List<GenreCollection.Genre>>
+    @Query("SELECT * from genre ORDER BY id ASC")
+    fun getGenres(): LiveData<List<Genre>>
 
 
 }

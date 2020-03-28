@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import xyz.ecbn.moviemvvm.R
-import xyz.ecbn.moviemvvm.data.model.MovieData
+import xyz.ecbn.moviemvvm.data.model.Movie
 
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
  */
 class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
-    private val items = mutableListOf<MovieData>()
+    private val items = mutableListOf<Movie>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle = itemView.findViewById<TextView>(R.id.textView)
@@ -32,7 +32,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
         holder.tvTitle.text = movie.originalTitle
     }
 
-    fun addAll(movies: ArrayList<MovieData>) {
+    fun addAll(movies: ArrayList<Movie>) {
         items.addAll(movies)
         notifyDataSetChanged()
     }

@@ -10,7 +10,7 @@ import com.bumptech.glide.RequestManager
 import com.facebook.shimmer.ShimmerFrameLayout
 import xyz.ecbn.moviemvvm.BuildConfig
 import xyz.ecbn.moviemvvm.R
-import xyz.ecbn.moviemvvm.data.model.MovieData
+import xyz.ecbn.moviemvvm.data.model.Movie
 
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
@@ -18,7 +18,7 @@ import xyz.ecbn.moviemvvm.data.model.MovieData
 class DiscoveryCarouselAdapter(private val glide: RequestManager) :
     RecyclerView.Adapter<DiscoveryCarouselAdapter.ViewHolder>() {
 
-    private val items = mutableListOf<MovieData>()
+    private val items = mutableListOf<Movie>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivCarousel = itemView.findViewById<ImageView>(R.id.ivCarouosel)
@@ -43,17 +43,17 @@ class DiscoveryCarouselAdapter(private val glide: RequestManager) :
         holder.shimmer.hideShimmer()
     }
 
-    fun setData(movies: List<MovieData>) {
+    fun setData(movies: List<Movie>) {
         items.clear()
         addAll(movies)
     }
 
-    fun addAll(movies: List<MovieData>) {
+    fun addAll(movies: List<Movie>) {
         items.addAll(movies)
         notifyDataSetChanged()
     }
 
-    fun add(movie: MovieData) {
+    fun add(movie: Movie) {
         items.add(movie)
         notifyDataSetChanged()
     }

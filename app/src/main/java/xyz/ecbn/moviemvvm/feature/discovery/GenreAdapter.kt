@@ -7,14 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import xyz.ecbn.moviemvvm.R
-import xyz.ecbn.moviemvvm.data.model.GenreCollection
+import xyz.ecbn.moviemvvm.data.model.Genre
 
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
  */
 class GenreAdapter : RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
 
-    private val items = mutableListOf<GenreCollection.Genre>()
+    private val items = mutableListOf<Genre>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle = itemView.findViewById<TextView>(R.id.tvTitle)
@@ -44,17 +44,17 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
         holder.shimmer.hideShimmer()
     }
 
-    fun setData(movies: List<GenreCollection.Genre>) {
+    fun setData(movies: List<Genre>) {
         items.clear()
         addAll(movies)
     }
 
-    fun addAll(movies: List<GenreCollection.Genre>) {
+    fun addAll(movies: List<Genre>) {
         items.addAll(movies)
         notifyDataSetChanged()
     }
 
-    fun add(movie: GenreCollection.Genre) {
+    fun add(movie: Genre) {
         items.add(movie)
         notifyDataSetChanged()
     }

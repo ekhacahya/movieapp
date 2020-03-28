@@ -63,7 +63,6 @@ dependencies {
     implementation 'io.github.inflationx:viewpump:2.0.3'
 
     //CarouselLayoutManager
-    implementation 'com.github.alirezat775:carousel-view:1.0.0'
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
 
     /* LiveData lib*/

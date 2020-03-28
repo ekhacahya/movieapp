@@ -5,14 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import xyz.ecbn.moviemvvm.LOCAL_DB_NAME
-import xyz.ecbn.moviemvvm.data.model.GenreCollection
-import xyz.ecbn.moviemvvm.data.model.MovieData
+import xyz.ecbn.moviemvvm.data.model.Genre
+import xyz.ecbn.moviemvvm.data.model.Movie
 
 /**
  * MovieAppMVVM Created by ecbn on 23/03/20.
  */
 @Database(
-    entities = [MovieData::class, GenreCollection.Genre::class],
+    entities = [
+        Movie::class,
+        Genre::class
+    ],
     version = 1,
     exportSchema = false
 )

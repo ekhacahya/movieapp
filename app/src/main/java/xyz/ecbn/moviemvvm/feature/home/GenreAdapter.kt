@@ -8,7 +8,7 @@ import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import xyz.ecbn.moviemvvm.R
-import xyz.ecbn.moviemvvm.data.model.GenreCollection
+import xyz.ecbn.moviemvvm.data.model.Genre
 import xyz.ecbn.moviemvvm.utils.ItemSelectedListener
 
 /**
@@ -17,7 +17,7 @@ import xyz.ecbn.moviemvvm.utils.ItemSelectedListener
 class GenreAdapter(selectedListener: ItemSelectedListener) :
     RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
 
-    private val items = mutableListOf<GenreCollection.Genre>()
+    private val items = mutableListOf<Genre>()
     private val listener = selectedListener
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,7 +42,7 @@ class GenreAdapter(selectedListener: ItemSelectedListener) :
 
     }
 
-    fun addAll(movies: ArrayList<GenreCollection.Genre>) {
+    fun addAll(movies: ArrayList<Genre>) {
         movies.mapIndexed { index, genre ->
             if (index < 3) items.add(genre)
         }

@@ -5,17 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import xyz.ecbn.moviemvvm.R
-import xyz.ecbn.moviemvvm.data.model.MovieData
+import xyz.ecbn.moviemvvm.data.model.Movie
 
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
  */
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
-    private val items = mutableListOf<MovieData>()
+    private val items = mutableListOf<Movie>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle = itemView.findViewById<TextView>(R.id.textView)
@@ -35,11 +35,11 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
         holder.cardView.setOnClickListener {
             val mv = MoviesFragmentDirections.actionMoviesFragmentToMovieFragment()
             mv.movie = movie
-            it.findNavController().navigate(mv)
+            Navigation.findNavController(it).navigate(mv)
         }
     }
 
-    fun addAll(movies: ArrayList<MovieData>) {
+    fun addAll(movies: ArrayList<Movie>) {
         items.addAll(movies)
         notifyDataSetChanged()
     }

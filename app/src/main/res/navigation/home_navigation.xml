@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_discoveryFragment_to_trendingFragment"
             app:destination="@id/menu_trending" />
+        <action
+            android:id="@+id/action_discoveryFragment_to_movieFragment2"
+            app:destination="@id/movieFragment2" />
     </fragment>
     <fragment
         android:id="@+id/menu_trending"
@@ -36,4 +39,13 @@
         android:name="xyz.ecbn.moviemvvm.feature.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/movieFragment2"
+        android:name="xyz.ecbn.moviemvvm.feature.detail.MovieFragment"
+        android:label="fragment_movie"
+        tools:layout="@layout/fragment_movie">
+        <argument
+            android:name="movie"
+            app:argType="xyz.ecbn.moviemvvm.data.model.Movie" />
+    </fragment>
 </navigation>

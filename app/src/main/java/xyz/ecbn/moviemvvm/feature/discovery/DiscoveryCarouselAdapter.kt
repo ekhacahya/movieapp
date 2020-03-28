@@ -21,9 +21,9 @@ class DiscoveryCarouselAdapter(private val glide: RequestManager) :
     private val items = mutableListOf<Movie>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val ivCarousel: ImageView = itemView.findViewById<ImageView>(R.id.ivCarouosel)
-        val tvTitle: TextView = itemView.findViewById<TextView>(R.id.tvTitle)
-        val shimmer: ShimmerFrameLayout = itemView.findViewById<ShimmerFrameLayout>(R.id.shimmer)
+        val ivCarousel: ImageView = itemView.findViewById(R.id.ivCarouosel)
+        val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
+        val shimmer: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

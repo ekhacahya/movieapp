@@ -17,8 +17,8 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
     private val items = mutableListOf<Genre>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvTitle: TextView = itemView.findViewById<TextView>(R.id.tvTitle)
-        val shimmer: ShimmerFrameLayout = itemView.findViewById<ShimmerFrameLayout>(R.id.shimmer)
+        val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
+        val shimmer: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

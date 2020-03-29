@@ -27,10 +27,12 @@ class MovieViewModel(
     init {
         getGenres()
         getMovies()
+        getNowPlaying()
     }
 
     val movies = movieRepository.movies
     val genres = movieRepository.genres
+    val nowPlaying = movieRepository.nowPlaying
 
     fun getGenres() {
         viewModelScope.launch {
@@ -51,6 +53,22 @@ class MovieViewModel(
                 Log.d(TAG, "getMovies runCatching:")
                 _networkState.postValue(NetworkState.LOADING)
                 movieRepository.getMovies(page, genre)
+            }.onSuccess {
+                Log.d(TAG, "getMovies onSuccess:")
+                _networkState.postValue(NetworkState.LOADED)
+            }.onFailure {
+                _networkState.postValue(NetworkState(Status.FAILED, it.message.toString()))
+                Log.d(TAG, "getMovies onFailure: ${it.message}")
+            }
+        }
+    }
+
+    fun getNowPlaying(page: Int = 1, genre: String = "") {
+        viewModelScope.launch {
+            runCatching {
+                Log.d(TAG, "getMovies runCatching:")
+                _networkState.postValue(NetworkState.LOADING)
+                movieRepository.getNowPlaying(page, genre)
             }.onSuccess {
                 Log.d(TAG, "getMovies onSuccess:")
                 _networkState.postValue(NetworkState.LOADED)

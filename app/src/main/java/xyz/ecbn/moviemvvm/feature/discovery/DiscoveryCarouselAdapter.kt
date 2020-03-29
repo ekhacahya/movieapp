@@ -5,12 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.facebook.shimmer.ShimmerFrameLayout
 import xyz.ecbn.moviemvvm.BuildConfig
 import xyz.ecbn.moviemvvm.R
 import xyz.ecbn.moviemvvm.data.model.Movie
+import xyz.ecbn.moviemvvm.utils.click
 
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
@@ -41,6 +43,10 @@ class DiscoveryCarouselAdapter(private val glide: RequestManager) :
         holder.tvTitle.text = movie.originalTitle
         holder.shimmer.stopShimmer()
         holder.shimmer.hideShimmer()
+        holder.shimmer.click {
+            val mv = DiscoveryFragmentDirections.actionDiscoveryFragmentToMovieFragment2(movie)
+            it.findNavController().navigate(mv)
+        }
     }
 
     fun setData(movies: List<Movie>) {

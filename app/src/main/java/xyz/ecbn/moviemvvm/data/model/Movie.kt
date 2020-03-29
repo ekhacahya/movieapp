@@ -7,6 +7,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import xyz.ecbn.moviemvvm.MOVIE_TYPE
 
 @Entity
 data class Movie(
@@ -40,6 +41,7 @@ data class Movie(
     var tagline: String? = "",
     var title: String? = "",
     var video: Boolean? = false,
+    var type: String? = MOVIE_TYPE.GENERAL.toString(),
     @SerializedName("vote_average")
     var voteAverage: Double? = 0.0,
     @SerializedName("vote_count")
@@ -66,6 +68,7 @@ data class Movie(
         source.readString(),
         source.readString(),
         source.readValue(Boolean::class.java.classLoader) as Boolean?,
+        source.readString(),
         source.readValue(Double::class.java.classLoader) as Double?,
         source.readValue(Int::class.java.classLoader) as Int?
     )
@@ -93,6 +96,7 @@ data class Movie(
         writeString(tagline)
         writeString(title)
         writeValue(video)
+        writeValue(type)
         writeValue(voteAverage)
         writeValue(voteCount)
     }

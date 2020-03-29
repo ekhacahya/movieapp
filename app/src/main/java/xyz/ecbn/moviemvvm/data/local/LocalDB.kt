@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import xyz.ecbn.moviemvvm.LOCAL_DB_NAME
 import xyz.ecbn.moviemvvm.data.model.Genre
 import xyz.ecbn.moviemvvm.data.model.Movie
+import xyz.ecbn.moviemvvm.utils.Converters
 
 /**
  * MovieAppMVVM Created by ecbn on 23/03/20.
@@ -19,6 +21,7 @@ import xyz.ecbn.moviemvvm.data.model.Movie
     version = 1,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class LocalDB : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao

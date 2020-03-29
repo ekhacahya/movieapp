@@ -6,4 +6,6 @@
     <string name="menu_upcoming">Upcoming</string>
     <string name="menu_profile">Profile</string>
     <string name="title_release_now">Release Now</string>
+    <string name="title_now_playing">Is On The Air</string>
+    <string name="menu_search">Search</string>
 </resources>

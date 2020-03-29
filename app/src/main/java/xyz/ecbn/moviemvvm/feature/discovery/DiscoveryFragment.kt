@@ -17,22 +17,23 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import xyz.ecbn.moviemvvm.R
 import xyz.ecbn.moviemvvm.base.BaseFragment
-import xyz.ecbn.moviemvvm.data.model.Genre
-import xyz.ecbn.moviemvvm.data.model.Movie
+import xyz.ecbn.moviemvvm.utils.showSnackbar
 import xyz.ecbn.moviemvvm.vm.MovieViewModel
-
 
 /**
  * A simple [Fragment] subclass.
  */
-class DiscoveryFragment : BaseFragment(), Observer<List<Any>> {
+class DiscoveryFragment : BaseFragment() {
     val TAG = DiscoveryFragment::class.java.simpleName
 
     private val glide: RequestManager by inject()
 
     private val movieViewModel: MovieViewModel by sharedViewModel()
-    private val releaseNowAdapter: ReleaseNowAdapter by lazy {
-        return@lazy ReleaseNowAdapter(glide)
+    private val releaseNowAdapter: MovieVerticalAdapter by lazy {
+        return@lazy MovieVerticalAdapter(glide)
+    }
+    private val nowPlayingAdapter: MovieVerticalAdapter by lazy {
+        return@lazy MovieVerticalAdapter(glide)
     }
     private val genreAdapter: GenreAdapter by lazy {
         return@lazy GenreAdapter()
@@ -59,14 +60,26 @@ class DiscoveryFragment : BaseFragment(), Observer<List<Any>> {
             movieViewModel.getMovies()
         }
         initRecyclerView()
-        movieViewModel.movies.observe(viewLifecycleOwner, this)
-        movieViewModel.genres.observe(viewLifecycleOwner, this)
+        movieViewModel.movies.observe(viewLifecycleOwner, Observer {
+            discoveryCarouselAdapter.setData(it)
+            releaseNowAdapter.setData(it)
+        })
+        movieViewModel.genres.observe(viewLifecycleOwner, Observer {
+            genreAdapter.setData(it)
+        })
+        movieViewModel.nowPlaying.observe(viewLifecycleOwner, Observer {
+            nowPlayingAdapter.setData(it)
+        })
         movieViewModel.network.observe(viewLifecycleOwner, observer)
     }
 
     private fun initRecyclerView() {
         rvReleaseNow.apply {
             adapter = releaseNowAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
+        rvNowPlaying.apply {
+            adapter = nowPlayingAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
         rvGenre.apply {
@@ -86,7 +99,7 @@ class DiscoveryFragment : BaseFragment(), Observer<List<Any>> {
     }
 
     override fun showErrorMessage(msg: String) {
-        showSnackBar(parent, msg)
+        parent.showSnackbar(msg)
     }
 
     override fun showProgressBar() {
@@ -95,28 +108,5 @@ class DiscoveryFragment : BaseFragment(), Observer<List<Any>> {
 
     override fun hideProgressBar() {
         swipeRefreshLayout.isRefreshing = false
-    }
-
-    /**
-     * Called when the data is changed.
-     * @param t  The new data
-     */
-    override fun onChanged(t: List<Any>) {
-        t.filterIsInstance<Movie>().takeIf {
-            it.size == t.size
-        }.let {
-            it?.let { it1 ->
-                discoveryCarouselAdapter.setData(it1)
-                releaseNowAdapter.setData(it1)
-            }
-        }
-        t.filterIsInstance<Genre>().takeIf {
-            it.size == t.size
-        }.let {
-            it?.let { it1 ->
-                genreAdapter.setData(it1)
-            }
-        }
-
     }
 }

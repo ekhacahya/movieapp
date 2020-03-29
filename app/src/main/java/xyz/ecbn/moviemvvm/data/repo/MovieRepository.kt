@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import xyz.ecbn.moviemvvm.MOVIE_TYPE
 import xyz.ecbn.moviemvvm.data.ServiceInterface
 import xyz.ecbn.moviemvvm.data.local.LocalDB
 import xyz.ecbn.moviemvvm.data.model.Genre
@@ -24,8 +25,8 @@ class MovieRepository(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 
-    /*val movie: LiveData<DetailMovie> =
-        Transformations.map(database.movieDao(), id -> database.movieDao().getMovie(id))*/
+    val nowPlaying: LiveData<List<Movie>> =
+        Transformations.map(database.movieDao().getNowPlaying()) { it }
     val movies: LiveData<List<Movie>> =
         Transformations.map(database.movieDao().getMovies()) { it }
     val genres: LiveData<List<Genre>> =
@@ -59,6 +60,20 @@ class MovieRepository(
         return withContext(Dispatchers.IO) {
             Log.d(TAG, "getMovies is called")
             val playlist = serviceInterface.popularMovies(page, genre).results
+            database.movieDao().setMovies(playlist)
+            return@withContext playlist
+        }
+    }
+
+    suspend fun getNowPlaying(page: Int = 1, genre: String = ""): List<Movie>? {
+        return withContext(Dispatchers.IO) {
+            Log.d(TAG, "getMovies is called")
+            val playlist = serviceInterface.nowPlaying(page, genre).results
+            playlist.map {
+                it.type = MOVIE_TYPE.NOW_PLAYING.toString()
+                Log.d(TAG, "playlist.map is called")
+            }
+            Log.d(TAG, "database.movieDao is called")
             database.movieDao().setMovies(playlist)
             return@withContext playlist
         }

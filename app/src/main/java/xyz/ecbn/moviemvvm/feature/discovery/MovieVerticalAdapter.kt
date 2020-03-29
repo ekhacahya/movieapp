@@ -12,12 +12,13 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import xyz.ecbn.moviemvvm.BuildConfig
 import xyz.ecbn.moviemvvm.R
 import xyz.ecbn.moviemvvm.data.model.Movie
+import xyz.ecbn.moviemvvm.utils.click
 
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
  */
-class ReleaseNowAdapter(private val glide: RequestManager) :
-    RecyclerView.Adapter<ReleaseNowAdapter.ViewHolder>() {
+class MovieVerticalAdapter(private val glide: RequestManager) :
+    RecyclerView.Adapter<MovieVerticalAdapter.ViewHolder>() {
 
     private val items = mutableListOf<Movie>()
 
@@ -46,9 +47,8 @@ class ReleaseNowAdapter(private val glide: RequestManager) :
         holder.tvTitle.text = movie.originalTitle
         holder.shimmer.stopShimmer()
         holder.shimmer.hideShimmer()
-        holder.shimmer.setOnClickListener {
-            val mv =
-                DiscoveryFragmentDirections.actionDiscoveryFragmentToMovieFragment2(movie)
+        holder.shimmer.click {
+            val mv = DiscoveryFragmentDirections.actionDiscoveryFragmentToMovieFragment2(movie)
             it.findNavController().navigate(mv)
         }
     }

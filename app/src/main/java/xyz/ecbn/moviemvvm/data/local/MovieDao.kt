@@ -23,6 +23,9 @@ interface MovieDao {
     @Query("SELECT * from movie ORDER BY id ASC")
     fun getMovies(): LiveData<List<Movie>>
 
+    @Query("SELECT * from movie where type = 'NOW_PLAYING' ORDER BY id ASC")
+    fun getNowPlaying(): LiveData<List<Movie>>
+
     @Query("SELECT * from movie WHERE id = :id")
     fun getMovie(id: Int): LiveData<Movie>
 

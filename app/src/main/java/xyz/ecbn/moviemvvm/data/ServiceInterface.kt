@@ -17,6 +17,12 @@ interface ServiceInterface {
         @Query(value = "with_genres") withGenre: String
     ): MoviesCollection
 
+    @GET(value = "movie/now_playing")
+    suspend fun nowPlaying(
+        @Query(value = "page") pageNumber: Int = 1,
+        @Query(value = "with_genres") withGenre: String
+    ): MoviesCollection
+
     @GET("genre/movie/list")
     suspend fun genreMovies(
         @Query("language") language: String = "en-US"

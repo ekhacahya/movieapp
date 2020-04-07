@@ -15,18 +15,18 @@ import xyz.ecbn.moviemvvm.data.model.Movie
 interface MovieDao {
     /*MovieList*/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun setMovie(movie: Movie)
+    fun setMovie(vararg users: Movie)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun setMovies(movie: ArrayList<Movie>)
 
-    @Query("SELECT * from movie ORDER BY id ASC")
+    @Query("SELECT * from Movie ORDER BY id ASC")
     fun getMovies(): LiveData<List<Movie>>
 
-    @Query("SELECT * from movie where type = 'NOW_PLAYING' ORDER BY id ASC")
+    @Query("SELECT * from Movie where type = 'NOW_PLAYING' ORDER BY id ASC")
     fun getNowPlaying(): LiveData<List<Movie>>
 
-    @Query("SELECT * from movie WHERE id = :id")
+    @Query("SELECT * from Movie WHERE id = :id")
     fun getMovie(id: Int): LiveData<Movie>
 
     /*Genre Movie*/
@@ -36,7 +36,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun setGenres(movie: ArrayList<Genre>)
 
-    @Query("SELECT * from genre ORDER BY id ASC")
+    @Query("SELECT * from Genre ORDER BY id ASC")
     fun getGenres(): LiveData<List<Genre>>
 
 

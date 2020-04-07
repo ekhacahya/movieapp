@@ -2,6 +2,7 @@ package xyz.ecbn.moviemvvm.module
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import xyz.ecbn.moviemvvm.feature.detail.DetailMovieViewModel
 import xyz.ecbn.moviemvvm.vm.MovieViewModel
 
 /**
@@ -10,5 +11,8 @@ import xyz.ecbn.moviemvvm.vm.MovieViewModel
 val viewModelModule = module {
     viewModel {
         MovieViewModel(get(), get())
+    }
+    viewModel {
+        DetailMovieViewModel(get())
     }
 }

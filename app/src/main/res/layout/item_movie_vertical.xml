@@ -44,7 +44,7 @@
                 android:layout_height="156dp"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/sample" />
+                app:srcCompat="@drawable/ic_broken_image" />
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

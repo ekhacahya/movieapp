@@ -1,6 +1,7 @@
 package xyz.ecbn.moviemvvm
 
 import android.app.Application
+import com.facebook.stetho.Stetho
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
@@ -27,7 +28,7 @@ class MovieApp : Application() {
             androidContext(this@MovieApp)
             modules(listOf(retrofitModule, viewModelModule, appModule, glideModule))
         }
-
+        Stetho.initializeWithDefaults(this)
         ViewPump.init(
             ViewPump.builder()
                 .addInterceptor(

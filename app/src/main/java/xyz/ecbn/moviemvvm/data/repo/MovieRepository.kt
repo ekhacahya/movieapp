@@ -31,16 +31,18 @@ class MovieRepository(
         Transformations.map(database.movieDao().getMovies()) { it }
     val genres: LiveData<List<Genre>> =
         Transformations.map(database.movieDao().getGenres()) { it }
+    val mv: LiveData<Movie> =
+        Transformations.map(database.movieDao().getMovie(0)) { it }
 
     fun detail(id: Int): LiveData<Movie> {
         return Transformations.map(database.movieDao().getMovie(id)) {
+            Log.d(TAG, "SIZE : $it")
             it
         }
     }
 
     suspend fun getGenres(): List<Genre>? {
         return withContext(Dispatchers.IO) {
-            Log.d(TAG, "getGenres is called")
             val playlist = serviceInterface.genreMovies().genres
             database.movieDao().setGenres(playlist)
             return@withContext playlist
@@ -49,7 +51,6 @@ class MovieRepository(
 
     suspend fun getMovie(id: Int): Movie? {
         return withContext(Dispatchers.IO) {
-            Log.d(TAG, "getMovie($id) is called")
             val playlist = serviceInterface.getMovie(id)
             database.movieDao().setMovie(playlist)
             return@withContext playlist
@@ -58,7 +59,6 @@ class MovieRepository(
 
     suspend fun getMovies(page: Int = 1, genre: String = ""): List<Movie>? {
         return withContext(Dispatchers.IO) {
-            Log.d(TAG, "getMovies is called")
             val playlist = serviceInterface.popularMovies(page, genre).results
             database.movieDao().setMovies(playlist)
             return@withContext playlist
@@ -67,13 +67,10 @@ class MovieRepository(
 
     suspend fun getNowPlaying(page: Int = 1, genre: String = ""): List<Movie>? {
         return withContext(Dispatchers.IO) {
-            Log.d(TAG, "getMovies is called")
             val playlist = serviceInterface.nowPlaying(page, genre).results
             playlist.map {
                 it.type = MOVIE_TYPE.NOW_PLAYING.toString()
-                Log.d(TAG, "playlist.map is called")
             }
-            Log.d(TAG, "database.movieDao is called")
             database.movieDao().setMovies(playlist)
             return@withContext playlist
         }

@@ -6,8 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import xyz.ecbn.moviemvvm.LOCAL_DB_NAME
-import xyz.ecbn.moviemvvm.data.model.Genre
-import xyz.ecbn.moviemvvm.data.model.Movie
+import xyz.ecbn.moviemvvm.data.model.*
 import xyz.ecbn.moviemvvm.utils.Converters
 
 /**
@@ -16,7 +15,8 @@ import xyz.ecbn.moviemvvm.utils.Converters
 @Database(
     entities = [
         Movie::class,
-        Genre::class
+        Genre::class,
+        ProductionCompany::class
     ],
     version = 1,
     exportSchema = false

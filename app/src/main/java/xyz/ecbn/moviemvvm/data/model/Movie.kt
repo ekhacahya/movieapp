@@ -1,111 +1,48 @@
 package xyz.ecbn.moviemvvm.data.model
 
 
-import android.os.Parcel
+import android.annotation.SuppressLint
 import android.os.Parcelable
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import xyz.ecbn.moviemvvm.MOVIE_TYPE
+import kotlinx.android.parcel.Parcelize
 
+@SuppressLint("ParcelCreator")
+@Parcelize
 @Entity
 data class Movie(
-    var adult: Boolean? = false,
+    var adult: Boolean? = null,
     @SerializedName("backdrop_path")
-    var backdropPath: String? = "",
-    var budget: Int? = 0,
-    @Ignore
-    var genres: List<Genre?>? = listOf(),
-    var homepage: String? = "",
+    var backdropPath: String? = null,
+    var budget: Int? = null,
+    var genres: List<Genre>? = null,
+    var homepage: String? = null,
     @PrimaryKey
-    var id: Int? = 0,
+    var id: Int? = null,
     @SerializedName("imdb_id")
-    var imdbId: String? = "",
+    var imdbId: String? = null,
     @SerializedName("original_language")
-    var originalLanguage: String? = "",
+    var originalLanguage: String? = null,
     @SerializedName("original_title")
-    var originalTitle: String? = "",
-    var overview: String? = "",
-    var popularity: Double? = 0.0,
+    var originalTitle: String? = null,
+    var overview: String? = null,
+    var type: String? = null,
+    var popularity: Double? = null,
     @SerializedName("poster_path")
-    var posterPath: String? = "",
-    @Ignore
+    var posterPath: String? = null,
     @SerializedName("production_companies")
-    var productionCompanies: List<ProductionCompany?>? = listOf(),
+    var productionCompanies: List<ProductionCompany>? = null,
     @SerializedName("release_date")
-    var releaseDate: String? = "",
-    var revenue: Int? = 0,
-    var runtime: Int? = 0,
-    var status: String? = "",
-    var tagline: String? = "",
-    var title: String? = "",
-    var video: Boolean? = false,
-    var type: String? = MOVIE_TYPE.GENERAL.toString(),
+    var releaseDate: String? = null,
+    var revenue: Int? = null,
+    var runtime: Int? = null,
+    var status: String? = null,
+    var tagline: String? = null,
+    var title: String? = null,
+    var video: Boolean? = null,
     @SerializedName("vote_average")
-    var voteAverage: Double? = 0.0,
+    var voteAverage: Double? = null,
     @SerializedName("vote_count")
-    var voteCount: Int? = 0
-) : Parcelable {
-    constructor(source: Parcel) : this(
-        source.readValue(Boolean::class.java.classLoader) as Boolean?,
-        source.readString(),
-        source.readValue(Int::class.java.classLoader) as Int?,
-        source.createTypedArrayList(Genre.CREATOR),
-        source.readString(),
-        source.readValue(Int::class.java.classLoader) as Int?,
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readValue(Double::class.java.classLoader) as Double?,
-        source.readString(),
-        source.createTypedArrayList(ProductionCompany.CREATOR),
-        source.readString(),
-        source.readValue(Int::class.java.classLoader) as Int?,
-        source.readValue(Int::class.java.classLoader) as Int?,
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readValue(Boolean::class.java.classLoader) as Boolean?,
-        source.readString(),
-        source.readValue(Double::class.java.classLoader) as Double?,
-        source.readValue(Int::class.java.classLoader) as Int?
-    )
-
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeValue(adult)
-        writeString(backdropPath)
-        writeValue(budget)
-        writeTypedList(genres)
-        writeString(homepage)
-        writeValue(id)
-        writeString(imdbId)
-        writeString(originalLanguage)
-        writeString(originalTitle)
-        writeString(overview)
-        writeValue(popularity)
-        writeString(posterPath)
-        writeTypedList(productionCompanies)
-        writeString(releaseDate)
-        writeValue(revenue)
-        writeValue(runtime)
-        writeString(status)
-        writeString(tagline)
-        writeString(title)
-        writeValue(video)
-        writeValue(type)
-        writeValue(voteAverage)
-        writeValue(voteCount)
-    }
-
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<Movie> = object : Parcelable.Creator<Movie> {
-            override fun createFromParcel(source: Parcel): Movie = Movie(source)
-            override fun newArray(size: Int): Array<Movie?> = arrayOfNulls(size)
-        }
-    }
-}
+    var voteCount: Int? = null
+) : Parcelable

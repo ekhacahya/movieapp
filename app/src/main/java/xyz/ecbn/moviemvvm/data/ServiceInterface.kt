@@ -28,9 +28,8 @@ interface ServiceInterface {
         @Query("language") language: String = "en-US"
     ): GenreCollection
 
-    @GET("genre/movie/{id}")
+    @GET("movie/{id}")
     suspend fun getMovie(
-        @Path("id") id: Int,
-        @Query("language") language: String = "en-US"
+        @Path("id") id: Int
     ): Movie
 }

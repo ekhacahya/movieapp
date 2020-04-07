@@ -47,6 +47,9 @@ dependencies {
     //KoinViewModel
     implementation 'org.koin:koin-androidx-viewmodel:2.0.1'
 
+    //stetho
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+
     // Retrofit dependencies
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation "com.squareup.retrofit2:converter-gson:2.7.1"

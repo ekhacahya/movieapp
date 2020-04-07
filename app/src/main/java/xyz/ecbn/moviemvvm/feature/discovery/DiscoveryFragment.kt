@@ -1,6 +1,7 @@
 package xyz.ecbn.moviemvvm.feature.discovery
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import kotlinx.android.synthetic.main.discovery_content.*
 import kotlinx.android.synthetic.main.fragment_discovery.*
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import xyz.ecbn.moviemvvm.R
 import xyz.ecbn.moviemvvm.base.BaseFragment
 import xyz.ecbn.moviemvvm.utils.showSnackbar
@@ -28,7 +29,7 @@ class DiscoveryFragment : BaseFragment() {
 
     private val glide: RequestManager by inject()
 
-    private val movieViewModel: MovieViewModel by sharedViewModel()
+    private val movieViewModel: MovieViewModel by viewModel()
     private val releaseNowAdapter: MovieVerticalAdapter by lazy {
         return@lazy MovieVerticalAdapter(glide)
     }
@@ -61,6 +62,9 @@ class DiscoveryFragment : BaseFragment() {
         }
         initRecyclerView()
         movieViewModel.movies.observe(viewLifecycleOwner, Observer {
+            it.map {
+                Log.d(TAG, "MOVIE: 331482 = ${it.id}")
+            }
             discoveryCarouselAdapter.setData(it)
             releaseNowAdapter.setData(it)
         })

@@ -9,7 +9,22 @@
     </style>
 
     <style name="TextMedium" parent="android:TextAppearance">
-        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Medium.ttf</item>
+    </style>
+    <style name="TextSemibold" parent="android:TextAppearance">
+        <item name="fontPath">fonts/Montserrat-SemiBold.ttf</item>
     </style>
 
+    <style name="FabStyle">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">133dp</item>
+        <item name="android:layout_margin">@dimen/spacing_large</item>
+        <item name="android:src">@drawable/loading_img</item>
+        <item name="borderWidth">0dp</item>
+        <item name="elevation">6dp</item>
+        <item name="pressedTranslationZ">12dp</item>
+        <item name="rippleColor">@android:color/white</item>
+    </style>
+
+    <dimen name="spacing_large">16dp</dimen>
 </resources>

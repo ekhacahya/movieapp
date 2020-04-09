@@ -6,6 +6,7 @@ import retrofit2.http.Query
 import xyz.ecbn.moviemvvm.data.model.GenreCollection
 import xyz.ecbn.moviemvvm.data.model.Movie
 import xyz.ecbn.moviemvvm.data.model.MoviesCollection
+import xyz.ecbn.moviemvvm.data.model.VideoCollection
 
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
@@ -32,4 +33,9 @@ interface ServiceInterface {
     suspend fun getMovie(
         @Path("id") id: Int
     ): Movie
+
+    @GET("movie/{id}/videos")
+    suspend fun getVideos(
+        @Path("id") id: Int
+    ): VideoCollection
 }

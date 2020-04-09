@@ -16,7 +16,11 @@ import xyz.ecbn.moviemvvm.utils.Converters
     entities = [
         Movie::class,
         Genre::class,
-        ProductionCompany::class
+        ProductionCompany::class,
+        Video::class,
+        Crew::class,
+        Image::class,
+        Actor::class
     ],
     version = 1,
     exportSchema = false

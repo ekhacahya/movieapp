@@ -5,8 +5,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import xyz.ecbn.moviemvvm.data.model.Actor
 import xyz.ecbn.moviemvvm.data.model.Genre
 import xyz.ecbn.moviemvvm.data.model.Movie
+import xyz.ecbn.moviemvvm.data.model.Video
 
 /**
  * MovieAppMVVM Created by ecbn on 23/03/20.
@@ -28,6 +30,21 @@ interface MovieDao {
 
     @Query("SELECT * from Movie WHERE id = :id")
     fun getMovie(id: Int): LiveData<Movie>
+
+    @Query("SELECT * from Video WHERE movieId = :id")
+    fun getVideos(id: Int): LiveData<List<Video>>
+
+    @Query("SELECT * from Actor WHERE movieId = :id")
+    fun getActors(id: Int): LiveData<List<Actor>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun setVideos(videos: ArrayList<Video>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun setVideo(video: Video)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun setActor(actor: Actor)
 
     /*Genre Movie*/
     @Insert(onConflict = OnConflictStrategy.REPLACE)

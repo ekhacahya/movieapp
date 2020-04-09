@@ -9,8 +9,10 @@ import kotlinx.coroutines.withContext
 import xyz.ecbn.moviemvvm.MOVIE_TYPE
 import xyz.ecbn.moviemvvm.data.ServiceInterface
 import xyz.ecbn.moviemvvm.data.local.LocalDB
+import xyz.ecbn.moviemvvm.data.model.Actor
 import xyz.ecbn.moviemvvm.data.model.Genre
 import xyz.ecbn.moviemvvm.data.model.Movie
+import xyz.ecbn.moviemvvm.data.model.Video
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -31,11 +33,23 @@ class MovieRepository(
         Transformations.map(database.movieDao().getMovies()) { it }
     val genres: LiveData<List<Genre>> =
         Transformations.map(database.movieDao().getGenres()) { it }
-    val mv: LiveData<Movie> =
-        Transformations.map(database.movieDao().getMovie(0)) { it }
 
     fun detail(id: Int): LiveData<Movie> {
         return Transformations.map(database.movieDao().getMovie(id)) {
+            Log.d(TAG, "SIZE : $it")
+            it
+        }
+    }
+
+    fun videos(id: Int): LiveData<List<Video>> {
+        return Transformations.map(database.movieDao().getVideos(id)) {
+            Log.d(TAG, "SIZE : $it")
+            it
+        }
+    }
+
+    fun actors(id: Int): LiveData<List<Actor>> {
+        return Transformations.map(database.movieDao().getActors(id)) {
             Log.d(TAG, "SIZE : $it")
             it
         }
@@ -52,6 +66,18 @@ class MovieRepository(
     suspend fun getMovie(id: Int): Movie? {
         return withContext(Dispatchers.IO) {
             val playlist = serviceInterface.getMovie(id)
+            playlist.videos?.results?.map {
+                it.movieId = id
+                database.movieDao().setVideo(it)
+            }
+            playlist.credits?.cast?.map {
+                it.movieId = id
+                database.movieDao().setActor(it)
+            }
+            playlist.credits?.crew?.map {
+
+            }
+
             database.movieDao().setMovie(playlist)
             return@withContext playlist
         }

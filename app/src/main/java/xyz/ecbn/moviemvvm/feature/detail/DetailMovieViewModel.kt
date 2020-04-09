@@ -23,12 +23,15 @@ class DetailMovieViewModel(
 
 //    val mv = movieRepository.mv
     fun detail(id: Int) = movieRepository.detail(id)
+    fun videos(id: Int) = movieRepository.videos(id)
+    fun actors(id: Int) = movieRepository.actors(id)
 
     fun getMovie(id: Int) {
         viewModelScope.launch {
             runCatching {
                 _networkState.postValue(NetworkState.LOADING)
                 movieRepository.getMovie(id)
+//                movieRepository.getVideos(id)
             }.onSuccess {
                 _networkState.postValue(NetworkState.LOADED)
                 Log.d(TAG, "onSuccess: $it")

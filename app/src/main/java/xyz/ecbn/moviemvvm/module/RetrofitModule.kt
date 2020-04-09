@@ -36,6 +36,7 @@ private fun okHttp() = OkHttpClient.Builder()
             .url
             .newBuilder()
             .addQueryParameter("api_key", API_KEY)
+            .addQueryParameter("append_to_response", "videos,images,credits")
             .build()
         val req = it.request()
             .newBuilder()

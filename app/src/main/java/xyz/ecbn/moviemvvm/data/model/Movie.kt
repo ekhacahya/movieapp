@@ -4,6 +4,7 @@ package xyz.ecbn.moviemvvm.data.model
 import android.annotation.SuppressLint
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
@@ -41,6 +42,12 @@ data class Movie(
     var tagline: String? = null,
     var title: String? = null,
     var video: Boolean? = null,
+    @Ignore
+    var videos: VideoCollection? = null,
+    @Ignore
+    var credits: Credits? = null,
+    @Ignore
+    var images: Images? = null,
     @SerializedName("vote_average")
     var voteAverage: Double? = null,
     @SerializedName("vote_count")

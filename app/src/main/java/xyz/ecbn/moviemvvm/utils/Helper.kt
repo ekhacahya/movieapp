@@ -1,12 +1,14 @@
 package xyz.ecbn.moviemvvm.utils
 
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.room.TypeConverter
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import xyz.ecbn.moviemvvm.MOVIE_TYPE
-import xyz.ecbn.moviemvvm.data.model.*
+import xyz.ecbn.moviemvvm.data.model.Genre
+import xyz.ecbn.moviemvvm.data.model.ProductionCompany
 import java.lang.reflect.Type
 import java.util.*
 
@@ -15,20 +17,6 @@ import java.util.*
  * MovieAppMVVM Created by ecbn on 29/03/20.
  */
 class Converters {
-    @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
-        return value?.let { Date(it) }
-    }
-
-    @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
-    }
-
-    @TypeConverter
-    fun typeToString(date: MOVIE_TYPE?): String? {
-        return date?.name
-    }
 
     @TypeConverter
     fun stringToGenre(data: String?): List<Genre?>? {
@@ -57,6 +45,24 @@ class Converters {
     fun companyToString(someObjects: List<ProductionCompany?>?): String? {
         return Gson().toJson(someObjects)
     }
+
+    /*@TypeConverter
+    fun stringToVideos(data: String?): VideoCollection? {
+        if (data == null) {
+            return VideoCollection()
+        }
+        val listType: Type = object : TypeToken<VideoCollection>() {}.type
+        val obj = Gson().fromJson<VideoCollection>(data, listType)
+        val obj1 = Gson().toJson(obj)
+        val listResult: Type = object : TypeToken<List<Video>>() {}.type
+        return Gson().fromJson(obj1, listResult)
+    }
+
+    @TypeConverter
+    fun videosToString(someObjects: List<Video>?): String? {
+        return Gson().toJson(someObjects)
+    }
+*/
 }
 
 fun View.setPaddingRight(value: Int) = setPadding(paddingLeft, paddingTop, value, paddingBottom)
@@ -64,6 +70,15 @@ fun View.setPaddingLeft(value: Int) = setPadding(value, paddingTop, paddingRight
 fun View.showSnackbar(msg: String, timeLength: Int = Snackbar.LENGTH_SHORT) {
     Snackbar.make(this, msg, timeLength).show()
 }
+
+fun View.show() {
+    this.visibility = VISIBLE
+}
+
+fun View.hide() {
+    this.visibility = GONE
+}
+
 
 /**
  * Set an onclick listener

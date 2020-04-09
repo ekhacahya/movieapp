@@ -53,6 +53,7 @@
             android:layout_margin="16dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/detailHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -102,8 +103,92 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvMovieGenre"
                     tools:text="130 min" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/powder_blue_60"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detailHeader" />
+
+            <TextView
+                android:id="@+id/tvStorylineTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_bluegray_round"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="3sp"
+                android:text="@string/title_storyline"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            <TextView
+                android:id="@+id/tvStoryline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="5sp"
+                android:textColor="#687189"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStorylineTitle"
+                tools:text="In 1981, Virginia Vallejo is a famous Colombia&apos;s journalist and TV news anchorwoman who is invited to a VIPs party in the ranch of Pablo Escobar, a low-born man who gained money and power with drug trafficking together his friends, turning them in the new generation of rich men of the country. Seduced by his charisma, Virginia starts a passionate love affair with Escobar despite he&apos;s a family man married with María Victoria. Along the 80&apos;s years, Escobar becomes famous in his… See all" />
+
+            <TextView
+                android:id="@+id/tvCastTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="4sp"
+                android:text="@string/cast_overview"
+                android:textAllCaps="true"
+                android:textColor="#687189"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStoryline" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCastTitle" />
+
+            <TextView
+                android:id="@+id/tvTrailerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="4sp"
+                android:text="@string/more_trailers"
+                android:textAllCaps="true"
+                android:textColor="#687189"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvCast" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvVideos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTrailerTitle" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

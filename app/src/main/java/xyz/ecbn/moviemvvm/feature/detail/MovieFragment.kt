@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -22,6 +23,7 @@ import xyz.ecbn.moviemvvm.data.model.*
 import xyz.ecbn.moviemvvm.feature.PlayerActivity
 import xyz.ecbn.moviemvvm.utils.show
 import xyz.ecbn.moviemvvm.utils.showSnackbar
+import xyz.ecbn.moviemvvm.utils.toast
 
 /**
  * A simple [Fragment] subclass.
@@ -42,6 +44,11 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
     private val posterAdapter: PosterAdapter by lazy {
         return@lazy PosterAdapter(glide, this)
     }
+
+    /*override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -113,6 +120,10 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
         //Init Toolbar
         collapsing_toolbar.title = movie.title
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        toolbar.inflateMenu(R.menu.video_menu)
+        toolbar.setOnMenuItemClickListener {
+            onOptionsItemSelected(it)
+        }
 
         //Init RecyclerView
         val divider = RecyclerViewDivider.with(rvVideos.context)
@@ -141,6 +152,18 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
         glide.load(BuildConfig.BASE_URL_IMAGE.plus("w780") + it.backdropPath).into(ivDetail)
         tvMovieTitle.text = it.originalTitle
         tvMetaScore.text = it.voteAverage.toString()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_share -> {
+                context?.toast("Share")
+            }
+            R.id.menu_favorite -> {
+                context?.toast("Favorite")
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onVideoSelected(video: Video) {

@@ -1,8 +1,10 @@
 package xyz.ecbn.moviemvvm.utils
 
+import android.content.Context
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.room.TypeConverter
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -67,6 +69,9 @@ class Converters {
 
 fun View.setPaddingRight(value: Int) = setPadding(paddingLeft, paddingTop, value, paddingBottom)
 fun View.setPaddingLeft(value: Int) = setPadding(value, paddingTop, paddingRight, paddingBottom)
+fun Context.toast(msg: String) {
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+}
 fun View.showSnackbar(msg: String, timeLength: Int = Snackbar.LENGTH_SHORT) {
     Snackbar.make(this, msg, timeLength).show()
 }

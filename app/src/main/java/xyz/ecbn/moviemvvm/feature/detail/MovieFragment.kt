@@ -20,7 +20,6 @@ import xyz.ecbn.moviemvvm.R
 import xyz.ecbn.moviemvvm.base.BaseFragment
 import xyz.ecbn.moviemvvm.data.model.*
 import xyz.ecbn.moviemvvm.feature.PlayerActivity
-import xyz.ecbn.moviemvvm.utils.hide
 import xyz.ecbn.moviemvvm.utils.show
 import xyz.ecbn.moviemvvm.utils.showSnackbar
 
@@ -79,14 +78,17 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
                 }
             })
             movieViewModel.videos(it.id).observe(viewLifecycleOwner, Observer { videos ->
-                if (videos.isNullOrEmpty()) ivPlay.hide() else ivPlay.show()
-                trailerAdapter.setData(videos)
+                ivPlay.show(videos.isNullOrEmpty())
+                tvViewTrailer.show(videos.size > 2)
+                trailerAdapter.setData(videos.subList(0, if (videos.size > 2) 2 else videos.size))
             })
             movieViewModel.actors(it.id).observe(viewLifecycleOwner, Observer { actors ->
-                castAdapter.setActor(actors)
+                tvViewCast.show(actors.size > 5)
+                castAdapter.setActor(actors.subList(0, if (actors.size > 5) 5 else actors.size))
             })
             movieViewModel.posters(it.id).observe(viewLifecycleOwner, Observer { images ->
-                posterAdapter.setImage(images)
+                tvViewPoster.show(images.size > 5)
+                posterAdapter.setImage(images.subList(0, if (images.size > 5) 5 else images.size))
             })
         }
 
@@ -95,6 +97,15 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
         }
         ivPlay.setOnClickListener {
             it.showSnackbar("Play Tjuy")
+        }
+        tvViewCast.setOnClickListener {
+            it.showSnackbar("Show More Actors")
+        }
+        tvViewPoster.setOnClickListener {
+            it.showSnackbar("Show More Poster")
+        }
+        tvViewTrailer.setOnClickListener {
+            it.showSnackbar("Show More Trailer")
         }
     }
 

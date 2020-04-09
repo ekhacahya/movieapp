@@ -71,6 +71,11 @@ fun View.showSnackbar(msg: String, timeLength: Int = Snackbar.LENGTH_SHORT) {
     Snackbar.make(this, msg, timeLength).show()
 }
 
+fun View.show(isShow: Boolean) {
+    if (isShow) this.visibility = VISIBLE
+    else this.visibility = GONE
+}
+
 fun View.show() {
     this.visibility = VISIBLE
 }

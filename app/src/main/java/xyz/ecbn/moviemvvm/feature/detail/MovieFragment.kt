@@ -3,7 +3,6 @@ package xyz.ecbn.moviemvvm.feature.detail
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,13 +58,12 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
         val args = arguments?.let { MovieFragmentArgs.fromBundle(it) }
         val movieData = args?.movie
 
-        initView()
 
         movieData?.let {
-            movieViewModel.getMovie(it.id!!)
+            initView(it)
+            movieViewModel.getMovie(it.id)
             setBaseData(it)
-            movieViewModel.detail(it.id!!).observe(viewLifecycleOwner, Observer { movie ->
-                Log.d(TAG, "SIZE :voteAverage ${movie.videos}")
+            movieViewModel.detail(it.id).observe(viewLifecycleOwner, Observer { movie ->
                 if (movie != null) {
                     tvMetaScore.text = movie.voteAverage.toString()
                     tvMovieLength.text = "${movie.runtime}${getString(R.string.detail_length)}"
@@ -80,14 +78,14 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
                     }
                 }
             })
-            movieViewModel.videos(it.id!!).observe(viewLifecycleOwner, Observer { videos ->
+            movieViewModel.videos(it.id).observe(viewLifecycleOwner, Observer { videos ->
                 if (videos.isNullOrEmpty()) ivPlay.hide() else ivPlay.show()
                 trailerAdapter.setData(videos)
             })
-            movieViewModel.actors(it.id!!).observe(viewLifecycleOwner, Observer { actors ->
+            movieViewModel.actors(it.id).observe(viewLifecycleOwner, Observer { actors ->
                 castAdapter.setActor(actors)
             })
-            movieViewModel.posters(it.id!!).observe(viewLifecycleOwner, Observer { images ->
+            movieViewModel.posters(it.id).observe(viewLifecycleOwner, Observer { images ->
                 posterAdapter.setImage(images)
             })
         }
@@ -100,7 +98,12 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
         }
     }
 
-    private fun initView() {
+    private fun initView(movie: Movie) {
+        //Init Toolbar
+        collapsing_toolbar.title = movie.title
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+
+        //Init RecyclerView
         val divider = RecyclerViewDivider.with(rvVideos.context)
             .asSpace()
             .size(8)

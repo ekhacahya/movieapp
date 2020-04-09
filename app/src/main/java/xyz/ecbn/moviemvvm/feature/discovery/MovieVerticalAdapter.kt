@@ -37,7 +37,7 @@ class MovieVerticalAdapter(private val glide: RequestManager) :
     override fun getItemCount(): Int = items.size
 
     override fun getItemId(position: Int): Long {
-        return items[position].id!!.toLong()
+        return items[position].id.toLong()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

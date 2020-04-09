@@ -13,7 +13,6 @@ import xyz.ecbn.moviemvvm.R
 import xyz.ecbn.moviemvvm.data.model.Actor
 import xyz.ecbn.moviemvvm.data.model.Crew
 import xyz.ecbn.moviemvvm.utils.click
-import xyz.ecbn.moviemvvm.utils.hide
 
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
@@ -27,12 +26,13 @@ class CastAdapter(private val glide: RequestManager, selectedListener: CastSelec
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivCarousel: ImageView = itemView.findViewById(R.id.ivMovie)
         val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
+        val tvCharacter: TextView = itemView.findViewById(R.id.tvCharacter)
         val shimmer: ShimmerFrameLayout = itemView.findViewById(R.id.shimmer)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_movie_vertical, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_actor, parent, false)
         return ViewHolder(view)
     }
 
@@ -46,7 +46,8 @@ class CastAdapter(private val glide: RequestManager, selectedListener: CastSelec
         val actor = items[position]
         val imgUrl = BuildConfig.BASE_URL_IMAGE.plus("w154") + actor.profilePath
         glide.load(imgUrl).into(holder.ivCarousel)
-        holder.tvTitle.hide()
+        holder.tvTitle.text = actor.name
+        holder.tvCharacter.text = actor.character
         holder.shimmer.stopShimmer()
         holder.shimmer.hideShimmer()
         holder.shimmer.click {

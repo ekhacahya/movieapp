@@ -20,7 +20,7 @@ data class Movie(
     var genres: List<Genre>? = null,
     var homepage: String? = null,
     @PrimaryKey
-    var id: Int? = null,
+    var id: Int = 0,
     @SerializedName("imdb_id")
     var imdbId: String? = null,
     @SerializedName("original_language")

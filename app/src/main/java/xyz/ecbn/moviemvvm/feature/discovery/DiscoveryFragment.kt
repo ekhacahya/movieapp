@@ -1,7 +1,6 @@
 package xyz.ecbn.moviemvvm.feature.discovery
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,9 +61,6 @@ class DiscoveryFragment : BaseFragment() {
         }
         initRecyclerView()
         movieViewModel.movies.observe(viewLifecycleOwner, Observer {
-            it.map {
-                Log.d(TAG, "MOVIE: 331482 = ${it.id}")
-            }
             discoveryCarouselAdapter.setData(it)
             releaseNowAdapter.setData(it)
         })

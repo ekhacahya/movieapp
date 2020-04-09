@@ -14,6 +14,8 @@ import kotlinx.android.parcel.Parcelize
 data class Image(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
+    var movieId: Int? = null,
+    var type: String? = ImageType.POSTER.name,
     @SerializedName("aspect_ratio")
     var aspectRatio: Double? = null,
     @SerializedName("file_path")
@@ -27,3 +29,8 @@ data class Image(
     var voteCount: Int? = null,
     var width: Int? = null
 ) : Parcelable
+
+enum class ImageType {
+    POSTER,
+    BACKDROP
+}

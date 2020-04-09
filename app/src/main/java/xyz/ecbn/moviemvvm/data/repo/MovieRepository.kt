@@ -1,6 +1,5 @@
 package xyz.ecbn.moviemvvm.data.repo
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import kotlinx.coroutines.CoroutineScope
@@ -9,10 +8,7 @@ import kotlinx.coroutines.withContext
 import xyz.ecbn.moviemvvm.MOVIE_TYPE
 import xyz.ecbn.moviemvvm.data.ServiceInterface
 import xyz.ecbn.moviemvvm.data.local.LocalDB
-import xyz.ecbn.moviemvvm.data.model.Actor
-import xyz.ecbn.moviemvvm.data.model.Genre
-import xyz.ecbn.moviemvvm.data.model.Movie
-import xyz.ecbn.moviemvvm.data.model.Video
+import xyz.ecbn.moviemvvm.data.model.*
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -35,24 +31,19 @@ class MovieRepository(
         Transformations.map(database.movieDao().getGenres()) { it }
 
     fun detail(id: Int): LiveData<Movie> {
-        return Transformations.map(database.movieDao().getMovie(id)) {
-            Log.d(TAG, "SIZE : $it")
-            it
-        }
+        return Transformations.map(database.movieDao().getMovie(id)) { it }
     }
 
     fun videos(id: Int): LiveData<List<Video>> {
-        return Transformations.map(database.movieDao().getVideos(id)) {
-            Log.d(TAG, "SIZE : $it")
-            it
-        }
+        return Transformations.map(database.movieDao().getVideos(id)) { it }
     }
 
     fun actors(id: Int): LiveData<List<Actor>> {
-        return Transformations.map(database.movieDao().getActors(id)) {
-            Log.d(TAG, "SIZE : $it")
-            it
-        }
+        return Transformations.map(database.movieDao().getActors(id)) { it }
+    }
+
+    fun posters(id: Int): LiveData<List<Image>> {
+        return Transformations.map(database.movieDao().getPosters(id)) { it }
     }
 
     suspend fun getGenres(): List<Genre>? {
@@ -74,8 +65,10 @@ class MovieRepository(
                 it.movieId = id
                 database.movieDao().setActor(it)
             }
-            playlist.credits?.crew?.map {
-
+            playlist.images?.posters?.map {
+                it.movieId = id
+                it.type = ImageType.POSTER.name
+                database.movieDao().setPoster(it)
             }
 
             database.movieDao().setMovie(playlist)

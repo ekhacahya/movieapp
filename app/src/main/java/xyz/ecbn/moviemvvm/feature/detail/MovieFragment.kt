@@ -19,10 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import xyz.ecbn.moviemvvm.BuildConfig
 import xyz.ecbn.moviemvvm.R
 import xyz.ecbn.moviemvvm.base.BaseFragment
-import xyz.ecbn.moviemvvm.data.model.Actor
-import xyz.ecbn.moviemvvm.data.model.Crew
-import xyz.ecbn.moviemvvm.data.model.Movie
-import xyz.ecbn.moviemvvm.data.model.Video
+import xyz.ecbn.moviemvvm.data.model.*
 import xyz.ecbn.moviemvvm.feature.PlayerActivity
 import xyz.ecbn.moviemvvm.utils.hide
 import xyz.ecbn.moviemvvm.utils.show
@@ -32,7 +29,7 @@ import xyz.ecbn.moviemvvm.utils.showSnackbar
  * A simple [Fragment] subclass.
  */
 class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
-    CastAdapter.CastSelectedListener {
+    CastAdapter.CastSelectedListener, PosterAdapter.ImageSelectedListener {
 
     val TAG = MovieFragment::class.java.simpleName
 
@@ -43,6 +40,9 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
     }
     private val castAdapter: CastAdapter by lazy {
         return@lazy CastAdapter(glide, this)
+    }
+    private val posterAdapter: PosterAdapter by lazy {
+        return@lazy PosterAdapter(glide, this)
     }
 
     override fun onCreateView(
@@ -85,8 +85,10 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
                 trailerAdapter.setData(videos)
             })
             movieViewModel.actors(it.id!!).observe(viewLifecycleOwner, Observer { actors ->
-                if (actors.isNullOrEmpty()) ivPlay.hide() else ivPlay.show()
                 castAdapter.setActor(actors)
+            })
+            movieViewModel.posters(it.id!!).observe(viewLifecycleOwner, Observer { images ->
+                posterAdapter.setImage(images)
             })
         }
 
@@ -114,6 +116,11 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             divider.addTo(this)
         }
+        rvPoster.apply {
+            adapter = posterAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            divider.addTo(this)
+        }
     }
 
     private fun setBaseData(it: Movie) {
@@ -133,6 +140,10 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
     }
 
     override fun onCrewSelected(view: View, crew: Crew) {
+
+    }
+
+    override fun onImageSelected(view: View, actor: Image) {
 
     }
 

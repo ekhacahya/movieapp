@@ -25,6 +25,7 @@ class DetailMovieViewModel(
     fun detail(id: Int) = movieRepository.detail(id)
     fun videos(id: Int) = movieRepository.videos(id)
     fun actors(id: Int) = movieRepository.actors(id)
+    fun posters(id: Int) = movieRepository.posters(id)
 
     fun getMovie(id: Int) {
         viewModelScope.launch {

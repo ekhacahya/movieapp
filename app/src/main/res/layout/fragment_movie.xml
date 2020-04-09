@@ -154,6 +154,7 @@
                 android:text="@string/cast_overview"
                 android:textAllCaps="true"
                 android:textColor="#687189"
+                style="@style/TextSemibold"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvStoryline" />
@@ -168,9 +169,34 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvCastTitle" />
 
             <TextView
+                android:id="@+id/tvPosterTitle"
+                style="@style/TextSemibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="4sp"
+                android:text="@string/posters"
+                android:textAllCaps="true"
+                android:textColor="#687189"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvCast" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPoster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPosterTitle" />
+
+            <TextView
                 android:id="@+id/tvTrailerTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/TextSemibold"
                 android:layout_marginTop="24dp"
                 android:letterSpacing="-0.02"
                 android:lineSpacingExtra="4sp"
@@ -179,7 +205,7 @@
                 android:textColor="#687189"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rvCast" />
+                app:layout_constraintTop_toBottomOf="@+id/rvPoster" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvVideos"

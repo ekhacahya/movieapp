@@ -24,6 +24,7 @@ import xyz.ecbn.moviemvvm.feature.PlayerActivity
 import xyz.ecbn.moviemvvm.utils.show
 import xyz.ecbn.moviemvvm.utils.showSnackbar
 import xyz.ecbn.moviemvvm.utils.toast
+import xyz.ecbn.moviemvvm.vm.DetailMovieViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -44,11 +45,6 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
     private val posterAdapter: PosterAdapter by lazy {
         return@lazy PosterAdapter(glide, this)
     }
-
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -150,7 +146,7 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
 
     private fun setBaseData(it: Movie) {
         glide.load(BuildConfig.BASE_URL_IMAGE.plus("w780") + it.backdropPath).into(ivDetail)
-        tvMovieTitle.text = it.originalTitle
+        tvMovieTitle.text = it.originalTitle.plus("(${it.releaseDate?.substring(0, 4)})")
         tvMetaScore.text = it.voteAverage.toString()
     }
 

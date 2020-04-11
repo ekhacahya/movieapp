@@ -11,5 +11,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Images(
     var backdrops: ArrayList<Image> = arrayListOf(),
+    var profiles: ArrayList<Image> = arrayListOf(),
     var posters: ArrayList<Image> = arrayListOf()
 ) : Parcelable

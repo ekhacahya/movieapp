@@ -4,17 +4,16 @@ package xyz.ecbn.moviemvvm.data.model
 import android.annotation.SuppressLint
 import android.os.Parcelable
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @SuppressLint("ParcelCreator")
 @Parcelize
-@Entity
+@Entity(primaryKeys = arrayOf("id", "movieId", "personId"))
 data class Image(
-    @PrimaryKey(autoGenerate = true)
     var id: Int,
-    var movieId: Int? = null,
+    var movieId: Int = 0,
+    var personId: Int= 0,
     var type: String? = ImageType.POSTER.name,
     @SerializedName("aspect_ratio")
     var aspectRatio: Double? = null,

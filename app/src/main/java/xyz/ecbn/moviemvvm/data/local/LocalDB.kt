@@ -20,6 +20,7 @@ import xyz.ecbn.moviemvvm.utils.Converters
         Video::class,
         Crew::class,
         Image::class,
+        Person::class,
         Actor::class
     ],
     version = 1,

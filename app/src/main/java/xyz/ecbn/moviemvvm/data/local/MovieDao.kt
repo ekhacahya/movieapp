@@ -59,5 +59,16 @@ interface MovieDao {
     @Query("SELECT * from Genre ORDER BY id ASC")
     fun getGenres(): LiveData<List<Genre>>
 
+    /*Person*/
+    @Query("SELECT * from Person WHERE id = :id")
+    fun getPerson(id: Int): LiveData<Person>
 
+    @Query("SELECT * from Actor WHERE personId = :id")
+    fun getPersonActors(id: Int): LiveData<List<Actor>>
+
+    @Query("SELECT * from Image WHERE personId = :id and type = 'POSTER'")
+    fun getPersonPosters(id: Int): LiveData<List<Image>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun setPerson(movie: Person)
 }

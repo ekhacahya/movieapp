@@ -3,10 +3,7 @@ package xyz.ecbn.moviemvvm.data
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import xyz.ecbn.moviemvvm.data.model.GenreCollection
-import xyz.ecbn.moviemvvm.data.model.Movie
-import xyz.ecbn.moviemvvm.data.model.MoviesCollection
-import xyz.ecbn.moviemvvm.data.model.VideoCollection
+import xyz.ecbn.moviemvvm.data.model.*
 
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
@@ -29,13 +26,13 @@ interface ServiceInterface {
         @Query("language") language: String = "en-US"
     ): GenreCollection
 
+    @GET("person/{id}")
+    suspend fun getPerson(
+        @Path("id") id: Int
+    ): Person
+
     @GET("movie/{id}")
     suspend fun getMovie(
         @Path("id") id: Int
     ): Movie
-
-    @GET("movie/{id}/videos")
-    suspend fun getVideos(
-        @Path("id") id: Int
-    ): VideoCollection
 }

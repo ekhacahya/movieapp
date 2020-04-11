@@ -15,7 +15,6 @@ import xyz.ecbn.moviemvvm.data.repo.MovieRepository
  * MovieAppMVVM Created by ecbn on 21/03/20.
  */
 class MovieViewModel(
-    private val serviceInterface: ServiceInterface,
     private val movieRepository: MovieRepository
 ) : ViewModel() {
 

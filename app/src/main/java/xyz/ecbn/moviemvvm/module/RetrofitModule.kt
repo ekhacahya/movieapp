@@ -8,25 +8,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import xyz.ecbn.moviemvvm.BuildConfig
 import xyz.ecbn.moviemvvm.BuildConfig.API_KEY
 import xyz.ecbn.moviemvvm.data.ServiceInterface
-import xyz.ecbn.moviemvvm.data.repo.MovieRepository
 import java.util.concurrent.TimeUnit
 
 /**
  * MovieAppMVVM Created by ecbn on 21/03/20.
  */
-val retrofitModule = module {    // 1
-
-    single {   // 2
-        okHttp()  // 3
+val retrofitModule = module {
+    single {
+        okHttp()
     }
     single {
-        retrofit()  // 4
+        retrofit()
     }
     single {
-        get<Retrofit>().create(ServiceInterface::class.java)   // 5
-    }
-    single {
-        MovieRepository(get(), get())
+        get<Retrofit>().create(ServiceInterface::class.java)
     }
 }
 

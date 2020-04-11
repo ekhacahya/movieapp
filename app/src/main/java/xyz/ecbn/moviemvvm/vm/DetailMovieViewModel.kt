@@ -1,4 +1,4 @@
-package xyz.ecbn.moviemvvm.feature.detail
+package xyz.ecbn.moviemvvm.vm
 
 import android.util.Log
 import androidx.lifecycle.LiveData

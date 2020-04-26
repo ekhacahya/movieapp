@@ -69,6 +69,6 @@ class PosterAdapter(private val glide: RequestManager, selectedListener: ImageSe
     }
 
     interface ImageSelectedListener {
-        fun onImageSelected(view: View, actor: Image)
+        fun onImageSelected(view: View, image: Image)
     }
 }

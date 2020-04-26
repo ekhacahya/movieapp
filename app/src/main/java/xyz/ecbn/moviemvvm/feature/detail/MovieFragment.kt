@@ -176,8 +176,10 @@ class MovieFragment : BaseFragment(), TrailerAdapter.VideoSelectedListener,
 
     }
 
-    override fun onImageSelected(view: View, actor: Image) {
-
+    override fun onImageSelected(view: View, image: Image) {
+        val intent = Intent(requireActivity(), DetailImageActivity::class.java)
+        intent.putExtra("image", image)
+        startActivity(intent)
     }
 
 }

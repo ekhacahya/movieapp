@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import xyz.ecbn.moviemvvm.R
 import xyz.ecbn.moviemvvm.vm.MovieViewModel
@@ -27,22 +26,4 @@ class MoviesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val args = arguments?.let { MoviesFragmentArgs.fromBundle(it) }
-        val genre = args?.genre
-
-        toolbar.title = genre?.name
-
-        rvGenre.apply {
-            adapter = mAdapter
-        }
-
-        movieViewModel.getMovies(genre = genre?.id.toString())
-        /*movieViewModel.movieState.observe(
-            viewLifecycleOwner, Observer {
-                it.movies?.let { it1 -> mAdapter.addAll(it1) }
-            }
-        )*/
-    }
 }

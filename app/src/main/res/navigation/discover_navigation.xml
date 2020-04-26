@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/discover_navigation"
+    app:startDestination="@id/discoveryFragment">
+    <fragment
+        android:id="@+id/discoveryFragment"
+        android:name="xyz.ecbn.moviemvvm.feature.discovery.DiscoveryFragment"
+        android:label="fragment_discovery"
+        tools:layout="@layout/fragment_discovery">
+        <action
+            android:id="@+id/action_discovery_to_movie"
+            app:destination="@id/movieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieFragment"
+        android:name="xyz.ecbn.moviemvvm.feature.detail.MovieFragment"
+        android:label="fragment_movie"
+        tools:layout="@layout/fragment_movie">
+        <argument
+            android:name="movie"
+            app:argType="xyz.ecbn.moviemvvm.data.model.Movie" />
+    </fragment>
+
+</navigation>

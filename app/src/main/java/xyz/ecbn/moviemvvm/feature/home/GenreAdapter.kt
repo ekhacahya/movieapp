@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import xyz.ecbn.moviemvvm.R
 import xyz.ecbn.moviemvvm.data.model.Genre
@@ -37,8 +36,8 @@ class GenreAdapter(selectedListener: ItemSelectedListener) :
         holder.tvTitle.text = genre.name
         holder.cardView.setOnClickListener {
             listener.onItemClicked(it)
-            val movies = HomeFragmentDirections.movies(genre)
-            it.findNavController().navigate(movies)
+            /*val movies = HomeFragmentDirections.movies(genre)
+            it.findNavController().navigate(movies)*/
         }
 
     }

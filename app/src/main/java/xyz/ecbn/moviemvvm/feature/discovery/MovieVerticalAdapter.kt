@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
@@ -48,8 +49,13 @@ class MovieVerticalAdapter(private val glide: RequestManager) :
         holder.shimmer.stopShimmer()
         holder.shimmer.hideShimmer()
         holder.shimmer.click {
-            val mv = DiscoveryFragmentDirections.actionDiscoveryFragmentToMovieFragment2(movie)
-            it.findNavController().navigate(mv)
+            /*val mv = DiscoveryFragmentDirections.actionDiscoveryFragmentToMovieFragment3(movie)
+            it.findNavController().navigate(mv)*/
+            val bundle = bundleOf("movie" to items[position])
+            it.findNavController().navigate(
+                R.id.action_discovery_to_movie,
+                bundle
+            )
         }
     }
 

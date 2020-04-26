@@ -1,16 +1,15 @@
 package xyz.ecbn.moviemvvm.feature.discovery
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.bumptech.glide.RequestManager
-import com.yarolegovich.discretescrollview.DSVOrientation
-import com.yarolegovich.discretescrollview.InfiniteScrollAdapter
-import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import kotlinx.android.synthetic.main.discovery_content.*
 import kotlinx.android.synthetic.main.fragment_discovery.*
 import org.koin.android.ext.android.inject
@@ -38,42 +37,49 @@ class DiscoveryFragment : BaseFragment() {
     private val genreAdapter: GenreAdapter by lazy {
         return@lazy GenreAdapter()
     }
-    private val discoveryCarouselAdapter: DiscoveryCarouselAdapter by lazy {
+    private val carouselAdapter: DiscoveryCarouselAdapter by lazy {
         return@lazy DiscoveryCarouselAdapter(glide)
-    }
-    private val mAdapterDiscovery: InfiniteScrollAdapter<DiscoveryCarouselAdapter.ViewHolder> by lazy {
-        return@lazy InfiniteScrollAdapter.wrap(discoveryCarouselAdapter)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(TAG, "onCreateView: ")
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_discovery, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "onViewCreated: ")
         swipeRefreshLayout.setOnRefreshListener {
             movieViewModel.getGenres()
             movieViewModel.getMovies()
         }
         initRecyclerView()
         movieViewModel.movies.observe(viewLifecycleOwner, Observer {
-            discoveryCarouselAdapter.setData(it)
+            Log.d(TAG, "movieViewModel.movies: ")
+            carouselAdapter.setData(it)
             releaseNowAdapter.setData(it)
         })
         movieViewModel.genres.observe(viewLifecycleOwner, Observer {
+            Log.d(TAG, "movieViewModel.genres: ")
             genreAdapter.setData(it)
         })
         movieViewModel.nowPlaying.observe(viewLifecycleOwner, Observer {
+            Log.d(TAG, "movieViewModel.nowPlaying: ")
             nowPlayingAdapter.setData(it)
         })
         movieViewModel.network.observe(viewLifecycleOwner, observer)
     }
 
     private fun initRecyclerView() {
+        val cardWidthPixels = requireActivity().resources.displayMetrics.widthPixels.times(0.80f)
+        val cardHintPercent = 0.01f
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(rvCarousel)
+
         rvReleaseNow.apply {
             adapter = releaseNowAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -87,13 +93,14 @@ class DiscoveryFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
         rvCarousel.apply {
-            adapter = mAdapterDiscovery
-            setOrientation(DSVOrientation.HORIZONTAL)
-            setItemTransitionTimeMillis(150)
-            setItemTransformer(
-                ScaleTransformer.Builder()
-                    .setMinScale(0.8f)
-                    .build()
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = carouselAdapter
+            addItemDecoration(
+                CarouselDecoration(
+                    requireActivity(),
+                    cardWidthPixels.toInt(),
+                    cardHintPercent
+                )
             )
         }
     }

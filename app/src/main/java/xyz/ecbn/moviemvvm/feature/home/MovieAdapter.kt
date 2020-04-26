@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import xyz.ecbn.moviemvvm.R
 import xyz.ecbn.moviemvvm.data.model.Movie
@@ -33,9 +32,9 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
         val movie = items[holder.adapterPosition]
         holder.tvTitle.text = movie.originalTitle
         holder.cardView.setOnClickListener {
-            val mv = MoviesFragmentDirections.actionMoviesFragmentToMovieFragment()
+            /*val mv = MoviesFragmentDirections.actionMoviesFragmentToMovieFragment()
             mv.movie = movie
-            Navigation.findNavController(it).navigate(mv)
+            Navigation.findNavController(it).navigate(mv)*/
         }
     }
 

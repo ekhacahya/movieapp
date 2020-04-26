@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <com.yarolegovich.discretescrollview.DiscreteScrollView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCarousel"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:padding="8dp"
-        app:dsv_orientation="horizontal" />
+        android:layout_height="200dp" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvGenre"
         android:layout_width="match_parent"
-        tools:listitem="@layout/item_genre"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        tools:listitem="@layout/item_genre" />
 
     <TextView
         style="@style/TextMedium"
